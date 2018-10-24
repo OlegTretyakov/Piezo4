@@ -1,0 +1,204 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{0e185f78-ba25-4709-aa51-f3aac0343ab6}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="mbrtu.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbdm.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbbp30.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\cbp30.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbsi20101.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbvs20201.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbvg20401.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbvg20402.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbfm20301.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbpc21001.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbpg21101.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbpg21201.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="mbsm20501.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\mc30.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\mc30sm.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="mbrtu">
+        <MSBuild Projects="mbrtu.dproj"/>
+    </Target>
+    <Target Name="mbrtu:Clean">
+        <MSBuild Projects="mbrtu.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbrtu:Make">
+        <MSBuild Projects="mbrtu.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbdm">
+        <MSBuild Projects="mbdm.dproj"/>
+    </Target>
+    <Target Name="mbdm:Clean">
+        <MSBuild Projects="mbdm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbdm:Make">
+        <MSBuild Projects="mbdm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbbp30">
+        <MSBuild Projects="mbbp30.dproj"/>
+    </Target>
+    <Target Name="mbbp30:Clean">
+        <MSBuild Projects="mbbp30.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbbp30:Make">
+        <MSBuild Projects="mbbp30.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cbp30">
+        <MSBuild Projects="..\cbp30.dproj"/>
+    </Target>
+    <Target Name="cbp30:Clean">
+        <MSBuild Projects="..\cbp30.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbp30:Make">
+        <MSBuild Projects="..\cbp30.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbsi20101">
+        <MSBuild Projects="mbsi20101.dproj"/>
+    </Target>
+    <Target Name="mbsi20101:Clean">
+        <MSBuild Projects="mbsi20101.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbsi20101:Make">
+        <MSBuild Projects="mbsi20101.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbvs20201">
+        <MSBuild Projects="mbvs20201.dproj"/>
+    </Target>
+    <Target Name="mbvs20201:Clean">
+        <MSBuild Projects="mbvs20201.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbvs20201:Make">
+        <MSBuild Projects="mbvs20201.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbvg20401">
+        <MSBuild Projects="mbvg20401.dproj"/>
+    </Target>
+    <Target Name="mbvg20401:Clean">
+        <MSBuild Projects="mbvg20401.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbvg20401:Make">
+        <MSBuild Projects="mbvg20401.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbvg20402">
+        <MSBuild Projects="mbvg20402.dproj"/>
+    </Target>
+    <Target Name="mbvg20402:Clean">
+        <MSBuild Projects="mbvg20402.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbvg20402:Make">
+        <MSBuild Projects="mbvg20402.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbfm20301">
+        <MSBuild Projects="mbfm20301.dproj"/>
+    </Target>
+    <Target Name="mbfm20301:Clean">
+        <MSBuild Projects="mbfm20301.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbfm20301:Make">
+        <MSBuild Projects="mbfm20301.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbpc21001">
+        <MSBuild Projects="mbpc21001.dproj"/>
+    </Target>
+    <Target Name="mbpc21001:Clean">
+        <MSBuild Projects="mbpc21001.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbpc21001:Make">
+        <MSBuild Projects="mbpc21001.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbpg21101">
+        <MSBuild Projects="mbpg21101.dproj"/>
+    </Target>
+    <Target Name="mbpg21101:Clean">
+        <MSBuild Projects="mbpg21101.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbpg21101:Make">
+        <MSBuild Projects="mbpg21101.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbpg21201">
+        <MSBuild Projects="mbpg21201.dproj"/>
+    </Target>
+    <Target Name="mbpg21201:Clean">
+        <MSBuild Projects="mbpg21201.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbpg21201:Make">
+        <MSBuild Projects="mbpg21201.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mbsm20501">
+        <MSBuild Projects="mbsm20501.dproj"/>
+    </Target>
+    <Target Name="mbsm20501:Clean">
+        <MSBuild Projects="mbsm20501.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mbsm20501:Make">
+        <MSBuild Projects="mbsm20501.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mc30">
+        <MSBuild Projects="..\mc30.dproj"/>
+    </Target>
+    <Target Name="mc30:Clean">
+        <MSBuild Projects="..\mc30.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mc30:Make">
+        <MSBuild Projects="..\mc30.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="mc30sm">
+        <MSBuild Projects="..\mc30sm.dproj"/>
+    </Target>
+    <Target Name="mc30sm:Clean">
+        <MSBuild Projects="..\mc30sm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="mc30sm:Make">
+        <MSBuild Projects="..\mc30sm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="mbrtu;mbdm;mbbp30;cbp30;mbsi20101;mbvs20201;mbvg20401;mbvg20402;mbfm20301;mbpc21001;mbpg21101;mbpg21201;mbsm20501;mc30;mc30sm"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="mbrtu:Clean;mbdm:Clean;mbbp30:Clean;cbp30:Clean;mbsi20101:Clean;mbvs20201:Clean;mbvg20401:Clean;mbvg20402:Clean;mbfm20301:Clean;mbpc21001:Clean;mbpg21101:Clean;mbpg21201:Clean;mbsm20501:Clean;mc30:Clean;mc30sm:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="mbrtu:Make;mbdm:Make;mbbp30:Make;cbp30:Make;mbsi20101:Make;mbvs20201:Make;mbvg20401:Make;mbvg20402:Make;mbfm20301:Make;mbpc21001:Make;mbpg21101:Make;mbpg21201:Make;mbsm20501:Make;mc30:Make;mc30sm:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

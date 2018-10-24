@@ -1,0 +1,45 @@
+package ST221ui;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ST221 control form'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcwdXE11R,
+  Jcl,
+  JvCore,
+  JvStdCtrls,
+  JvCustom;
+
+contains
+  ST221MCFrm in 'ST221MCFrm.pas' {ST221Frm},
+  FormsControllerInterface in 'FormsControllerInterface.pas',
+  ST221MCInterface in 'ST221MCInterface.pas',
+  Vodopad.Math in 'Vodopad.Math.pas';
+
+end.

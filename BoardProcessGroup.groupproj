@@ -1,0 +1,54 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{1096dd4d-f238-4b2e-a9e7-99f40e3f452e}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="cbp30.dproj" />
+    <Projects Include="mc30.dproj" />
+    <Projects Include="ModBusDevice\mbbp30.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="mc30">
+    <MSBuild Projects="mc30.dproj" Targets="" />
+  </Target>
+  <Target Name="mc30:Clean">
+    <MSBuild Projects="mc30.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="mc30:Make">
+    <MSBuild Projects="mc30.dproj" Targets="Make" />
+  </Target>
+  <Target Name="mbbp30">
+    <MSBuild Projects="ModBusDevice\mbbp30.dproj" Targets="" />
+  </Target>
+  <Target Name="mbbp30:Clean">
+    <MSBuild Projects="ModBusDevice\mbbp30.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="mbbp30:Make">
+    <MSBuild Projects="ModBusDevice\mbbp30.dproj" Targets="Make" />
+  </Target>
+  <Target Name="cbp30">
+    <MSBuild Projects="cbp30.dproj" Targets="" />
+  </Target>
+  <Target Name="cbp30:Clean">
+    <MSBuild Projects="cbp30.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="cbp30:Make">
+    <MSBuild Projects="cbp30.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="mc30;mbbp30;cbp30" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="mc30:Clean;mbbp30:Clean;cbp30:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="mc30:Make;mbbp30:Make;cbp30:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

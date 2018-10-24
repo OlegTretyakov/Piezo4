@@ -1,0 +1,47 @@
+package SA4350ui;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcwdXE11R,
+  vclx,
+  vclimg,
+  dbrtl,
+  Jcl,
+  JvCore,
+  JvStdCtrls,
+  JvCustom;
+
+contains
+  SA4350MC in 'SA4350MC.pas' {SA4350Frm},
+  SA4350MCInterface in 'SA4350MCInterface.pas',
+  Vodopad.Math in 'Vodopad.Math.pas',
+  FormsControllerInterface in 'FormsControllerInterface.pas';
+
+end.

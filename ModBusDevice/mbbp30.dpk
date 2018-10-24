@@ -1,0 +1,79 @@
+package mbbp30;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DEFINE LOGPORT}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  mbrtu,
+  ae30,
+  abp30,
+  mbdm;
+
+contains
+  ModBusDevice in 'ModBusDevice.pas',
+  mbsiControlInterface in 'mbsiControlInterface.pas',
+  mbBoardProtocol in 'mbBoardProtocol.pas',
+  mbPluginManagerInterface in 'mbPluginManagerInterface.pas',
+  mbPluginManager in 'mbPluginManager.pas',
+  AbstractDeviceInterface in '..\AbstractDeviceInterface.pas',
+  RS232Phisycal in '..\RS232Phisycal.pas',
+  dmSysInfoInterface in '..\dmSysInfoInterface.pas',
+  FreqMeasureExtention in 'BoardModbusExtentions\FreqMeasureExtention.pas',
+  ByListPositionInstallerInterface in '..\AbstractBoard\ByListPositionInstallerInterface.pas',
+  dmFreqMeasurerInterface in '..\dmFreqMeasurerInterface.pas',
+  ExtentionsListInterface in '..\AbstractBoard\ExtentionsListInterface.pas',
+  PositionInterface in '..\AbstractBoard\PositionInterface.pas',
+  dmChannelsInterface in '..\dmChannelsInterface.pas',
+  AbstractBoardInterface in '..\AbstractBoard\AbstractBoardInterface.pas',
+  dmSerialSetterInterface in '..\dmSerialSetterInterface.pas',
+  mbvg20401Interface in 'mbvg20401Interface.pas',
+  mbpc21001Interface in 'mbpc21001Interface.pas',
+  mbvg20402Interface in 'mbvg20402Interface.pas',
+  dmProgrammerInterface in '..\dmProgrammerInterface.pas',
+  ProgrammerExtention in 'BoardModbusExtentions\ProgrammerExtention.pas',
+  PositionController in 'BoardModbusExtentions\PositionController.pas',
+  BoardVoltmeter in 'BoardModbusExtentions\BoardVoltmeter.pas',
+  dmPositionControllerInterface in '..\dmPositionControllerInterface.pas',
+  ChipAbstractInterface in '..\ChipSupport\ChipAbstractInterface.pas',
+  dmPositionVoltmeterInterface in '..\dmPositionVoltmeterInterface.pas',
+  PositionVoltmeter in 'BoardModbusExtentions\PositionVoltmeter.pas',
+  dmVoltageConsts in '..\dmVoltageConsts.pas',
+  PositionListInterface in '..\AbstractBoard\PositionListInterface.pas',
+  mbProgrammerInterface in 'mbProgrammerInterface.pas',
+  dmReadInterface in '..\dmReadInterface.pas',
+  dmWriteInterface in '..\dmWriteInterface.pas',
+  Vodopad.Math in '..\Vodopad.Math.pas',
+  Vodopad.ObjectList in '..\Vodopad.ObjectList.pas',
+  Vodopad.Timer in '..\Vodopad.Timer.pas',
+  dmChallengeControllerInterface in '..\dmChallengeControllerInterface.pas',
+  dmBoardVoltmeterInterface in '..\dmBoardVoltmeterInterface.pas';
+
+end.
+
+

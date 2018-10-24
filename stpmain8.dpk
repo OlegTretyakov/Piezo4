@@ -1,0 +1,70 @@
+package stpmain8;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  vclimg,
+  Stp8pdbex,
+  dbrtl,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  FireDACIBDriver,
+  vclFireDAC;
+
+contains
+  AbstractMainProcess in 'AbstractMainProcess.pas',
+  AbstractMainProcessInterface in 'AbstractMainProcessInterface.pas',
+  VdpDataModule in 'VdpDataModule.pas',
+  VdpDMAccess in 'VdpDMAccess.pas',
+  IniRoutines in 'Logger\IniRoutines.pas',
+  Compensation_V8 in 'Compensation_V8.pas',
+  MainFormProcessInterface in 'MainFormProcessInterface.pas',
+  MainProcFormsSupportsInterface in 'MainProcFormsSupportsInterface.pas',
+  BoardProcessInterface in 'BoardProcessInterface.pas',
+  ExtentionsListInterface in 'AbstractBoard\ExtentionsListInterface.pas',
+  PositionListInterface in 'AbstractBoard\PositionListInterface.pas',
+  AbstractBoardInterface in 'AbstractBoard\AbstractBoardInterface.pas',
+  StpProcessTypes in 'StpProcessTypes.pas',
+  CustomChildProcess in 'CustomChildProcess.pas',
+  ChamberInterfaces in 'ChamberInterfaces.pas',
+  EventBusInterface in 'EventBusInterface.pas',
+  Compens_v8About in 'Compens_v8About.pas' {CompensAboutBox},
+  AbstractProtocol in 'AbstractBoard\AbstractProtocol.pas',
+  LoggerInterface in 'Logger\LoggerInterface.pas',
+  FormsControllerInterface in 'FormsControllerInterface.pas',
+  Vodopad.EventList in 'Vodopad.EventList.pas',
+  Vodopad.FloatList in 'Vodopad.FloatList.pas',
+  Vodopad.Math in 'Vodopad.Math.pas',
+  Vodopad.Timer in 'Vodopad.Timer.pas',
+  ReconstructorFormInterface in 'ReconstructorFormInterface.pas',
+  CalcLogger in 'CalcLogger.pas';
+
+end.

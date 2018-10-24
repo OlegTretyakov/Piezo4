@@ -1,0 +1,55 @@
+package Mas6279D8Stp8Proc;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  Mas6279D8Stp8dbo,
+  astpm30;
+
+contains
+  MAS6279D8.ExportModules in 'MAS6279D8.ExportModules.pas',
+  MAS6279D8.MMPreparePoint in 'MAS6279D8.MMPreparePoint.pas',
+  MAS6279D8.MMInRange in 'MAS6279D8.MMInRange.pas',
+  MAS6279D8.FinalProgrammer in 'MAS6279D8.FinalProgrammer.pas',
+  MAS6279D8.Stp8TestThread in 'MAS6279D8.Stp8TestThread.pas',
+  MAS6279D8.MMStartTest in 'MAS6279D8.MMStartTest.pas',
+  AbstractBoardInterface in '..\..\AbstractBoard\AbstractBoardInterface.pas',
+  ChamberInterfaces in '..\..\ChamberInterfaces.pas',
+  dmBoardVoltmeterInterface in '..\..\dmBoardVoltmeterInterface.pas',
+  dmFreqMeasurerInterface in '..\..\dmFreqMeasurerInterface.pas',
+  dmPositionControllerInterface in '..\..\dmPositionControllerInterface.pas',
+  dmPositionVoltmeterInterface in '..\..\dmPositionVoltmeterInterface.pas',
+  dmProgrammerInterface in '..\..\dmProgrammerInterface.pas',
+  dmReadInterface in '..\..\dmReadInterface.pas',
+  dmVoltageConsts in '..\..\dmVoltageConsts.pas',
+  EventBusInterface in '..\..\EventBusInterface.pas',
+  Vodopad.FloatList in '..\..\Vodopad.FloatList.pas',
+  Vodopad.Math in '..\..\Vodopad.Math.pas';
+
+end.

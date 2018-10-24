@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{38122234-A328-4721-817F-0CD75F4D1866}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="SA4350.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SA4350ui.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ST221.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ST221ui.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="SA4350">
+        <MSBuild Projects="SA4350.dproj"/>
+    </Target>
+    <Target Name="SA4350:Clean">
+        <MSBuild Projects="SA4350.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SA4350:Make">
+        <MSBuild Projects="SA4350.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SA4350ui">
+        <MSBuild Projects="SA4350ui.dproj"/>
+    </Target>
+    <Target Name="SA4350ui:Clean">
+        <MSBuild Projects="SA4350ui.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SA4350ui:Make">
+        <MSBuild Projects="SA4350ui.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ST221">
+        <MSBuild Projects="ST221.dproj"/>
+    </Target>
+    <Target Name="ST221:Clean">
+        <MSBuild Projects="ST221.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ST221:Make">
+        <MSBuild Projects="ST221.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ST221ui">
+        <MSBuild Projects="ST221ui.dproj"/>
+    </Target>
+    <Target Name="ST221ui:Clean">
+        <MSBuild Projects="ST221ui.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ST221ui:Make">
+        <MSBuild Projects="ST221ui.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="SA4350;SA4350ui;ST221;ST221ui"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="SA4350:Clean;SA4350ui:Clean;ST221:Clean;ST221ui:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="SA4350:Make;SA4350ui:Make;ST221:Make;ST221ui:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

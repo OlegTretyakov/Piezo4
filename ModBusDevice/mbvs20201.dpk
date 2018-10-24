@@ -1,0 +1,43 @@
+package mbvs20201;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  mbdm,
+  mbrtu;
+
+contains
+  mbvs20201Module in 'mbvs20201Module.pas',
+  dmChannelsInterface in '..\dmChannelsInterface.pas',
+  AbstractDeviceInterface in '..\AbstractDeviceInterface.pas',
+  dmChallengeControllerInterface in '..\dmChallengeControllerInterface.pas',
+  dmPositionControllerInterface in '..\dmPositionControllerInterface.pas',
+  dmVoltageConsts in '..\dmVoltageConsts.pas',
+  Vodopad.ObjectList in '..\Vodopad.ObjectList.pas';
+
+end.

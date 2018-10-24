@@ -1,0 +1,5 @@
+*.skincfg
+*.stat
+*.local
+*.identcache
+*.res
