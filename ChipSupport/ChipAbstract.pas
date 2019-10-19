@@ -86,8 +86,8 @@ System.SysUtils;
 
 function ReadConstant(AChipClass : TChipClass; const ASection, AIdent : string; var oConst : Integer):Boolean;
 var
-vFileName : TFileName;
-f : TIniFile;
+  vFileName : TFileName;
+  f : TIniFile;
 begin
   vFileName := ExtractFilePath(ParamStr(0))+AChipClass.ChipName+'.ini';
   f := TIniFile.Create(vFileName);
@@ -102,8 +102,8 @@ end;
 
 function ReadConstant(AChipClass : TChipClass; const ASection, AIdent : string; var oConst : String):Boolean;
 var
-vFileName : TFileName;
-f : TIniFile;
+  vFileName : TFileName;
+  f : TIniFile;
 begin
   vFileName := ExtractFilePath(ParamStr(0))+AChipClass.ChipName+'.ini';
   f := TIniFile.Create(vFileName);
@@ -118,9 +118,9 @@ end;
 
 procedure ReadControlledBitsIndex(AChipClass : TChipClass; const ASection : string; ADefault : Boolean; out oBitsIndex : TChipBytes);
 var
-vFileName : TFileName;
-f : TIniFile;
-vBitIndex : Byte;
+  vFileName : TFileName;
+  f : TIniFile;
+  vBitIndex : Byte;
 begin
   vFileName := ExtractFilePath(ParamStr(0))+AChipClass.ChipName+'.ini';
   f := TIniFile.Create(vFileName);
@@ -142,35 +142,21 @@ end;
 { TImsAbstract }
 
 procedure TChipAbstract.Assign(const ASource: TChipAbstract; const ABitsIndex: TChipBytes);
-var i : byte;
+var
+  i : byte;
 begin
   if not Assigned(ABitsIndex) then
   begin
     for I := BitMinIndex to BitMaxIndex do
-        BitValue[i] := ASource.BitValue[i];
-    exit;
-  end else if Length(ABitsIndex)<1 then
-       Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-        BitValue[ABitsIndex[i]] := ASource.BitValue[ABitsIndex[i]];
+      BitValue[i] := ASource.BitValue[i];
+  end else if (Length(ABitsIndex) > 0) then
+    for I := Low(ABitsIndex) to High(ABitsIndex) do
+      BitValue[ABitsIndex[i]] := ASource.BitValue[ABitsIndex[i]];
 end;
-
-{procedure TChipAbstract.Assign(const ASource: IChipAbstract; const ABitsIndex: TChipBytes);
-var i : byte;
-begin
-  if not Assigned(ABitsIndex) then
-  begin
-    for I := BitMinIndex to BitMaxIndex do
-        BitValue[i] := ASource.BitValue[i];
-    exit;
-  end else if Length(ABitsIndex)<1 then
-       Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-        BitValue[ABitsIndex[i]] := ASource.BitValue[ABitsIndex[i]];
-end; }
 
 function TChipAbstract.IsIdenty(const ASource: TChipAbstract; const ABitsIndex: TChipBytes): boolean;
-var i : byte;
+var
+  i : byte;
 begin
   result := False;
   if not Assigned(ABitsIndex) then
@@ -178,45 +164,21 @@ begin
     for I := BitMinIndex to BitMaxIndex do
     begin
       result := BitValue[i] = ASource.BitValue[i];
-        if not result then
-          break;
-    end;
-    exit;
-  end else if Length(ABitsIndex)<1 then
-     Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-  begin
-    result := BitValue[ABitsIndex[i]] = ASource.BitValue[ABitsIndex[i]];
       if not result then
         break;
-  end;
+    end;
+  end else if (Length(ABitsIndex) > 0) then
+    for I := Low(ABitsIndex) to High(ABitsIndex) do
+    begin
+      result := BitValue[ABitsIndex[i]] = ASource.BitValue[ABitsIndex[i]];
+      if not result then
+        break;
+    end;
 end;
 
-{function TChipAbstract.IsIdenty(const ASource: IChipAbstract; const ABitsIndex: TChipBytes): boolean;
-var i : byte;
-begin
-  result := False;
-  if not Assigned(ABitsIndex) then
-  begin
-    for I := BitMinIndex to BitMaxIndex do
-    begin
-      result := BitValue[i] = ASource.BitValue[i];
-        if not result then
-          break;
-    end;
-    exit;
-  end else if Length(ABitsIndex)<1 then
-     Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-  begin
-    result := BitValue[ABitsIndex[i]] = ASource.BitValue[ABitsIndex[i]];
-      if not result then
-        break;
-  end;
-end; }
-
 procedure TChipAbstract.Clear;
-var i : byte;
+var
+  i : byte;
 begin
   for i := BitMinIndex to BitMaxIndex do
     self.BitValue[i] := 0;
@@ -234,17 +196,16 @@ begin
 end;
 
 procedure TChipAbstract.IChipAbstract_Assign(const ASource: IChipAbstract; const ABitsIndex: TChipBytes);
-var i : byte;
+var
+  i : byte;
 begin
   if not Assigned(ABitsIndex) then
   begin
     for I := BitMinIndex to BitMaxIndex do
-        BitValue[i] := ASource.BitValue[i];
-    exit;
-  end else if Length(ABitsIndex)<1 then
-       Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-        BitValue[ABitsIndex[i]] := ASource.BitValue[ABitsIndex[i]];
+      BitValue[i] := ASource.BitValue[i];
+  end else if (Length(ABitsIndex) > 0) then
+    for I := Low(ABitsIndex) to High(ABitsIndex) do
+      BitValue[ABitsIndex[i]] := ASource.BitValue[ABitsIndex[i]];
 end;
 
 function TChipAbstract.IChipAbstract_BitDefValue(AIndex: byte): smallint;
@@ -288,7 +249,8 @@ begin
 end;
 
 function TChipAbstract.IChipAbstract_IsIdenty(const ASource: IChipAbstract; const ABitsIndex: TChipBytes): boolean;
-var i : byte;
+var
+  i : byte;
 begin
   result := False;
   if not Assigned(ABitsIndex) then
@@ -296,18 +258,16 @@ begin
     for I := BitMinIndex to BitMaxIndex do
     begin
       result := BitValue[i] = ASource.BitValue[i];
-        if not result then
-          break;
-    end;
-    exit;
-  end else if Length(ABitsIndex)<1 then
-     Exit;
-  for I := Low(ABitsIndex) to High(ABitsIndex) do
-  begin
-    result := BitValue[ABitsIndex[i]] = ASource.BitValue[ABitsIndex[i]];
       if not result then
         break;
-  end;
+    end;
+  end else if (Length(ABitsIndex) > 0) then
+    for I := Low(ABitsIndex) to High(ABitsIndex) do
+    begin
+      result := BitValue[ABitsIndex[i]] = ASource.BitValue[ABitsIndex[i]];
+      if not result then
+        break;
+    end;
 end;
 
 function TChipAbstract.IChipAbstract_ReadIntConstant(const ASection, AIdent: string; var oConst: Integer): Boolean;
@@ -327,7 +287,8 @@ end;
 
 procedure TChipAbstract.LoadFromIni(AIniFile: TCustomIniFile;
   const ASection: string; const ABitsIndex : TChipBytes);
-var i : byte;
+var
+  i : byte;
 begin
   if not Assigned(ABitsIndex) then
   begin
@@ -342,7 +303,8 @@ end;
 
 procedure TChipAbstract.SaveToIni(AIniFile: TCustomIniFile;
   const ASection: string; const ABitsIndex : TChipBytes);
-var i : byte;
+var
+  i : byte;
 begin
   if not Assigned(ABitsIndex) then
   begin
