@@ -2,28 +2,35 @@ unit ExtentionsLibrary;
 
 interface
 uses
-  WinApi.Windows, System.Classes, AbstractExtention;
+  WinApi.Windows,
+  System.Classes,
+  AbstractExtention;
+
 type
   TExtentionLibInfo = record
     iModule: HMODULE;
     ExtentionClass : TAbstractExtentionClass;
   end;
+
   pExtentionLibInfo = ^TExtentionLibInfo;
+
   TExtentionLibList = class(TList)
   protected
-    function GetModuleName(const Index: Integer): String; 
+    function GetModuleName(const Index: Integer): string;
     procedure Notify(Ptr: Pointer; Action: TListNotification); override;
     function Get(const Index: Integer): TAbstractExtentionClass;
    public
     function Exists(ClassName : TAbstractExtentionClass):Boolean;
     function Add(APluginInfo : TExtentionLibInfo) : integer;
     property Items[const Index: Integer]: TAbstractExtentionClass read Get; default;
-    property ModuleName[const Index: Integer]: String read GetModuleName;
+    property ModuleName[const Index: Integer]: string read GetModuleName;
     procedure FindPluginFiles; virtual; abstract;
   end;
 
 implementation
-uses System.SysUtils;
+
+uses
+  System.SysUtils;
 
 function TExtentionLibList.Add(APluginInfo : TExtentionLibInfo): integer;
 var
@@ -37,7 +44,7 @@ end;
 
 function TExtentionLibList.Exists(ClassName: TAbstractExtentionClass): Boolean;
 var
-i : Word;
+  i : Word;
 begin
   Result := false;
   i := 0;
@@ -52,21 +59,23 @@ end;
 
 function TExtentionLibList.Get(const Index: Integer): TAbstractExtentionClass;
 var
-vInfo : pExtentionLibInfo;
+  vInfo : pExtentionLibInfo;
 begin
-  result := nil;
   if (Index < Count) then
   begin 
     vInfo := pExtentionLibInfo(inherited Get(Index));
     result := vInfo.ExtentionClass;
   end else
-    raise Exception.Create(Format('No extention module found whith index %d',[Index]));
+  begin
+    result := nil;
+    raise Exception.Create(Format('No extension module found with index %d',[Index]));
+  end;
 end;
 
 function TExtentionLibList.GetModuleName(const Index: Integer): String;
 var
-vInfo : pExtentionLibInfo;
-Buffer: array[0..MAX_PATH] of Char;
+  vInfo : pExtentionLibInfo;
+  Buffer: array[0..MAX_PATH] of Char;
 begin
   if (Index > -1) and (Index < Count) then
   begin

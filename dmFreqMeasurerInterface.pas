@@ -11,8 +11,8 @@ type
     TimeStamp : TDateTime;
     SeriesCount,
     SeriesSuccesCount: Byte;
-    procedure Assign(ASource : pFreqResult);overload;
-    procedure Assign(ASource : TFreqResult);overload;
+    procedure Assign(ASource : pFreqResult); overload;
+    procedure Assign(ASource : TFreqResult); overload;
   end;
   IdmFreqStarter = interface(IInterface)
  ['{77D9A6D0-E8BB-43FF-AE51-B7BBC09DE0EB}']
@@ -23,7 +23,7 @@ type
     function StartPermanentlyMeasure: Boolean; overload; stdcall;
     function StartPermanentlyMeasure(ATime{mSec*100}:Word): Boolean; overload; stdcall;   
     procedure StopPermanentlyMeasure; stdcall;
-    function CalculatedTimeOut : Cardinal;stdcall;
+    function CalculatedTimeOut : Cardinal; stdcall;
   end;
   IdmFreqController = interface(IInterface)
   ['{DCF3D3BA-6D95-4823-9CAF-EE8D7A968CA5}']

@@ -1,8 +1,13 @@
 unit CustomChildProcess;
 
 interface
-  uses System.Classes, LoggerInterface;
+
+  uses
+    System.Classes,
+    LoggerInterface;
+
   type
+
   TCustomChildProcess = class(TComponent)
   private
   protected

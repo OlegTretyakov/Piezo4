@@ -2,9 +2,12 @@
 
 interface
   uses
-  System.Classes, commtypes, AbstractTag;
+    System.Classes,
+    commtypes,
+    AbstractTag;
+
 type
-  TProtocolErrorEvent = procedure (Result:TProtocolIOResult; APacket : pIOPacket) of object;
+  TProtocolErrorEvent = procedure (Result : TProtocolIOResult; APacket : pIOPacket) of object;
   //procedure called by the scan read thread to read data from your device.
   TScanReadProc = procedure (var oRescanAfter : Cardinal) of object;
   //function called by the scan write thread to write data on your device.
@@ -15,12 +18,14 @@ type
     ['{9217E70F-82A6-481E-A8F9-92D617D3ECD2}']
     procedure SetDataChanged(ADataChanged : Boolean);
   end;
+
   IProtocolPLCTag = interface(IProtocolTag)
     ['{7AB319AC-6519-4FB5-B7E3-6B772558268B}']
     procedure SetLastError(AError : TProtocolIOResult);
     procedure CallAfterRead;
     procedure WriteOK;
   end;
+
   IProtocolNotifications = interface(IInterface)
     ['{6C30C567-1FAE-4DF6-B665-52D98CD42B99}']
     function GetFireAsync : Boolean;
@@ -34,6 +39,7 @@ type
     procedure NotifyWriteFault;
     property FireAsync : Boolean read GetFireAsync;
   end;
+
   IProtocolDiscreteTag = interface(IProtocolPLCTag)
     ['{383E3341-1B0B-4383-B19F-E91479CE37F1}']
     function GetReadedValue(AIndex: Word): boolean;
@@ -44,6 +50,7 @@ type
     property ValuesToWrite[AIndex : Word]:boolean read GetToWriteValue write SetToWriteValue;
     property Values[AIndex : Word]:Boolean read GetReadedValue write SetToWriteValue;
   end;
+
   IProtocolAnalogTag = interface(IProtocolPLCTag)
    ['{0BBB9BAA-8AD6-446B-ADE9-2B393E66070B}']
     function GetReadedValue(AIndex: Word): Word;

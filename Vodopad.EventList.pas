@@ -2,32 +2,12 @@ unit Vodopad.EventList;
 
 interface
 
-uses System.Classes, System.Generics.Collections;
+uses
+  System.Classes,
+  System.Generics.Collections;
+
+
 type
-  {PMethodList = ^TMethodList;
-  TMethodList = Array[0..$00FFFFFF] of TMethod;
-  TCustomMethodList = class abstract (TObject)
-   private
-    FList: PMethodList;
-    fCount : integer;
-    FCapacity : integer;
-    function GetItem(Index: integer): TMethod;
-    procedure Grow;
-    function IndexOf(const AMethod: TMethod): Integer;
-    procedure SetCapacity(const Value: Integer);
-    procedure SetCount(const Value: Integer);
-   protected
-    procedure Add(const AMethod: TMethod);
-    procedure Remove(const AMethod: TMethod); overload;
-   public
-    constructor Create;
-    destructor Destroy; override;
-    procedure Clear;
-    property Count : integer read fCount;
-    property Capacity: Integer read FCapacity;
-    property Item [index : integer] : TMethod read GetItem; default;
-    procedure Remove(Index : integer);overload;
-  end; }
 
   TEventList = class(TList<TNotifyEvent>)
    public
@@ -157,7 +137,7 @@ end;
 procedure TCustomObjEventList.Execute(Sender: TObject; Event: TGUID;
   Params: Pointer);
 var
-i : integer;
+  i : integer;
 begin
   i := 0;
   while i < Count do
@@ -185,7 +165,7 @@ end;
 
 procedure TEventList.Execute(Sender: TObject);
 var
-i : integer;
+  i : integer;
 begin
   i := 0;
   while i < Count do
@@ -213,7 +193,7 @@ end;
   
 procedure TStrEventList.Execute(Sender: TObject; const Str: string);
 var
-i : integer;
+  i : integer;
 begin
   i := 0;
   while i < Count do

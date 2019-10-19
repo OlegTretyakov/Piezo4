@@ -4,7 +4,7 @@ interface
   type
   IdmWrite = interface(IInterface)
     ['{55A70648-7FD3-465F-8B7A-A97F530769D6}']
-    function Write(Params : Pointer=nil) : Boolean; stdcall;
+    function Write(Params : Pointer=nil) : boolean; stdcall;
   end; 
 
 const

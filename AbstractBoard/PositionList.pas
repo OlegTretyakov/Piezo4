@@ -2,9 +2,16 @@ unit PositionList;
 
 interface
 uses
-  WinApi.Windows, System.SysUtils, System.Generics.Collections, System.Classes, ExtentionsList,
-  PositionListInterface, Position, Vodopad.EventList,
-  EventBusInterface, ExtentionsListInterface;
+  WinApi.Windows,
+  System.SysUtils,
+  System.Generics.Collections,
+  System.Classes,
+  ExtentionsList,
+  PositionListInterface,
+  Position,
+  Vodopad.EventList,
+  EventBusInterface,
+  ExtentionsListInterface;
 
   type
   EPositionList = class(Exception);
@@ -70,9 +77,9 @@ uses
 implementation
 
 uses
-PositionInterface,
-ByListPositionInstallerInterface,
-AbstractExtention;
+  PositionInterface,
+  ByListPositionInstallerInterface,
+  AbstractExtention;
 
 
 
@@ -111,7 +118,7 @@ end;
 
 procedure TPositionsList.Delete(AIndex: Word);
 var
-vPosition : TPosition;
+  vPosition : TPosition;
 begin
   vPosition := GetPositionItem(AIndex);
   try
@@ -196,12 +203,12 @@ end;
 
 function TPositionsList.NewItem(BoardPos : Byte; AdditionalExtentions : TAdditionalExtentions):TObject;
 var
-vIdx : Integer;
-vPosition : TPosition;
-i : Word;
-vPosListPosExt : IByListPositionInstaller;
-vClass : TAbstractExtentionClass;
-vPosExtentions : IExtentions;
+  vIdx : Integer;
+  vPosition : TPosition;
+  i : Word;
+  vPosListPosExt : IByListPositionInstaller;
+  vClass : TAbstractExtentionClass;
+  vPosExtentions : IExtentions;
 begin
   vIdx := IndexOf(BoardPos);
   if vIdx <> -1 then
@@ -237,9 +244,9 @@ end;
 
 function TPositionsList.AdditionalExtentionClassCount(AClass: Pointer): Word;
 var
-i, vExtIdx : Word;
-vClass : TAbstractExtentionClass;
-vPosExtentions : IExtentions;
+  i, vExtIdx : Word;
+  vClass : TAbstractExtentionClass;
+  vPosExtentions : IExtentions;
 begin
   i := 0;
   Result := 0;
@@ -263,11 +270,11 @@ end;
 
 procedure TPositionsList.IExtentionsEventSink_OnAfterAdd(Sender: TObject; AIndex: integer);
 var
-vPosIndex : integer;
-vAdded : IByListPositionInstaller;
-vInsClass : TAbstractExtentionClass;
-vPosExtions : IExtentions;
-vIndex : Word;
+  vPosIndex : integer;
+  vAdded : IByListPositionInstaller;
+  vInsClass : TAbstractExtentionClass;
+  vPosExtions : IExtentions;
+  vIndex : Word;
 begin
   vIndex := Word(AIndex);
   if fExtentions.Find(vIndex, IByListPositionInstaller, vAdded) then
@@ -294,11 +301,11 @@ end;
 
 procedure TPositionsList.IExtentionsEventSink_OnBeforeDelete(Sender: TObject; AIndex: Integer);
 var
-vPosIndex : integer;
-vRemoved : IByListPositionInstaller;
-vRemoveClass : TAbstractExtentionClass;
-vPosExtions : IExtentions;   
-vIndex : Word;
+  vPosIndex : integer;
+  vRemoved : IByListPositionInstaller;
+  vRemoveClass : TAbstractExtentionClass;
+  vPosExtions : IExtentions;
+  vIndex : Word;
 begin  
   vIndex := Word(AIndex);
   if fExtentions.Find(vIndex, IByListPositionInstaller, vRemoved) then

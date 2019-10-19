@@ -1,11 +1,22 @@
 unit ProgrammerExtention;
 
 interface
-uses AbstractExtention, ByListPositionInstallerInterface,
-    dmProgrammerInterface, PositionInterface,  ChipAbstractInterface,
-    System.Classes, Vodopad.EventList, EventBusInterface, mbpc21001Interface, System.Threading;
+
+uses
+  System.Classes,
+  System.Threading,
+  AbstractExtention,
+  ByListPositionInstallerInterface,
+  dmProgrammerInterface,
+  PositionInterface,
+  ChipAbstractInterface,
+  Vodopad.EventList,
+  EventBusInterface,
+  mbpc21001Interface;
+
 type
   TPosListProgrammerExtention = class;
+
   TPositionProgrammerExtention = class(TAbstractExtention, IdmPositionProgrammer)
    private
     fBoardPos : Byte;
@@ -19,7 +30,7 @@ type
     function GetRegisters : boolean; overload; stdcall;
     function GetRegisters(const ADest : IChipAbstract) : boolean; overload;  stdcall;
     function SetRegisters : boolean;overload; stdcall;
-    function SetRegisters(const ASource : IChipAbstract) : boolean;overload; stdcall;
+    function SetRegisters(const ASource : IChipAbstract) : boolean; overload; stdcall;
   end;
   
   TPosListProgrammerExtention = class(TAbstractExtention,
@@ -74,15 +85,15 @@ type
 
 implementation
 uses
-System.SysUtils,
-AbstractDeviceInterface,
-PositionListInterface,
-ExtentionsListInterface,
-dmChallengeControllerInterface,
-dmChannelsInterface,
-dmReadInterface,
-dmWriteInterface,
-mbProgrammerInterface;
+  System.SysUtils,
+  AbstractDeviceInterface,
+  PositionListInterface,
+  ExtentionsListInterface,
+  dmChallengeControllerInterface,
+  dmChannelsInterface,
+  dmReadInterface,
+  dmWriteInterface,
+  mbProgrammerInterface;
 
 const
 C_NULL_PROG : TGUID = '{00000000-0000-0000-0000-000000000000}';
@@ -91,7 +102,7 @@ C_NULL_PROG : TGUID = '{00000000-0000-0000-0000-000000000000}';
 
 procedure TPositionProgrammerExtention.AfterCreate;
 var
-vExtList : IExtentions;
+  vExtList : IExtentions;
 begin
   inherited;
   fPositionChip := nil;
@@ -171,12 +182,12 @@ end;
 
 procedure TPosListProgrammerExtention.AfterCreate;
 var
-vDM : IDeviceModules;
-vPCObj : TObject;
-vPG : ImbProgrammer;
-vEB : IEventBus;
-vIdx : Byte;
-vIdx1 : Word;
+  vDM : IDeviceModules;
+  vPCObj : TObject;
+  vPG : ImbProgrammer;
+  vEB : IEventBus;
+  vIdx : Byte;
+  vIdx1 : Word;
 begin
   inherited;
   fStartTask := nil;
@@ -211,8 +222,8 @@ end;
 
 procedure TPosListProgrammerExtention.BeforeDestroy;
 var  
-vEB : IEventBus;
-vIdx : Byte;
+  vEB : IEventBus;
+  vIdx : Byte;
 begin
   vIdx := 0;
   while vIdx < fProgrammers.Count do
@@ -239,9 +250,9 @@ end;
 
 procedure TPosListProgrammerExtention.FreezeModules;
 var
-vModules : IDeviceModules;
-vController : IdmChallengeController;
-vIdx : Word;
+  vModules : IDeviceModules;
+  vController : IdmChallengeController;
+  vIdx : Word;
 begin
   if not fFrezedProcessed then
   begin
@@ -269,7 +280,7 @@ end;
 
 procedure TPosListProgrammerExtention.UnFreezeModules;
 var
-vIdx : Word;
+  vIdx : Word;
 begin
   vIdx := 0;
   while vIdx < fAutoFrezedModules.Count do
@@ -281,11 +292,11 @@ end;
 
 procedure TPosListProgrammerExtention.OnProgrammerEvent(Sender: TObject; Event: TGUID; Params: Pointer);
 var
-vPosList : IPositionsList;
-vPosition : IPosition;
-vExtList : IExtentions;
-vPosProgrammer : TPositionProgrammerExtention;
-vIdx : Word;
+  vPosList : IPositionsList;
+  vPosition : IPosition;
+  vExtList : IExtentions;
+  vPosProgrammer : TPositionProgrammerExtention;
+  vIdx : Word;
 begin
   if IsEqualGUID(Event, C_RegistersReadDone) then
   begin
@@ -339,12 +350,12 @@ end;
 
 function TPosListProgrammerExtention.PositionProcessed(BoardPos : Byte; const AProgrammer: TGUID):Boolean;
 var
-vPosList : IPositionsList;
-vPositionObj : TObject;
-vPosition : IPosition;
-vExtList : IExtentions;
-vIdx : Integer;
-vChip : IChipAbstract;
+  vPosList : IPositionsList;
+  vPositionObj : TObject;
+  vPosition : IPosition;
+  vExtList : IExtentions;
+  vIdx : Integer;
+  vChip : IChipAbstract;
 begin
   Result := False;
   if Assigned(Owner)
@@ -371,10 +382,10 @@ end;
 
 function TPosListProgrammerExtention.SendFromPositionToBoard(APosition : Byte):boolean;
 var
-vPosList : IPositionsList;
-vExtList : IExtentions;
-vProgrammer : IdmPositionProgrammer;
-vIdx : integer;
+  vPosList : IPositionsList;
+  vExtList : IExtentions;
+  vProgrammer : IdmPositionProgrammer;
+  vIdx : integer;
 begin
   Result := Assigned(Owner)
   and Supports(Owner.Owner, IPositionsList, vPosList);
@@ -394,7 +405,7 @@ end;
 
 function TPosListProgrammerExtention.ProgrammerExists(const AProgrammer: TGUID): Boolean;
 var
-vID : Word;
+  vID : Word;
 begin
   Result := FindProgrammerAddr(AProgrammer, vID);
 end;
@@ -414,12 +425,12 @@ end;
 
 function TPosListProgrammerExtention.ActiveCountByGuid(const AProgrammer: TGUID): Word;
 var
-vPosList : IPositionsList;
-vPositionObj : TObject;
-vPosition : IPosition;
-vExtList : IExtentions;
-vIdx : Word;
-vChip : IChipAbstract;
+  vPosList : IPositionsList;
+  vPositionObj : TObject;
+  vPosition : IPosition;
+  vExtList : IExtentions;
+  vIdx : Word;
+  vChip : IChipAbstract;
 begin
   Result := 0;
   if Assigned(Owner)
@@ -449,8 +460,8 @@ end;
 
 function TPosListProgrammerExtention.ActiveProgrammerSelected: Boolean;
 var
-vAddr : Word;
-vIdx : Byte;
+  vAddr : Word;
+  vIdx : Byte;
 begin
   Result := Assigned(fProgrammerController);
   if not Result then
@@ -461,7 +472,8 @@ end;
 
 procedure TPosListProgrammerExtention.FillSupportedOperations(
   const AProgrammer: TGUID; AOperations: TStrings);
-var vIdx: byte;
+var
+  vIdx: byte;
 begin
   AOperations.BeginUpdate;
   try
@@ -474,7 +486,8 @@ begin
 end;
 
 function TPosListProgrammerExtention.FindProgrammerAddr(const AProgrammer: TGUID; out oAddr: Word): boolean;
-var vIdx : Byte;
+var
+  vIdx : Byte;
 begin
   vIdx := 0;
   while (vIdx < fProgrammers.Count) do
@@ -515,8 +528,8 @@ end;
 
 function TPosListProgrammerExtention.GetActiveProgrammer: TGUID;
 var
-vAddr : Word;
-vIdx : Byte;
+  vAddr : Word;
+  vIdx : Byte;
 begin
   Result := C_NULL_PROG;
   if not Assigned(fProgrammerController) then
@@ -528,8 +541,8 @@ end;
 
 procedure TPosListProgrammerExtention.SetActiveProgrammer(const AProgrammer: TGUID);
 var
-vActive : TGUID; 
-vAddr : Word;
+  vActive : TGUID;
+  vAddr : Word;
 begin
   if ActiveProgrammerSelected then
   begin
@@ -545,7 +558,7 @@ end;
 
 function TPosListProgrammerExtention.SetRegisters(ABoardPosition: Byte; const ASource: IChipAbstract): boolean;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   Result := Assigned(ASource)
           and FindProgrammerIdx(ASource.ChipGUID, vIdx)
@@ -557,83 +570,84 @@ begin
   if Assigned(fStartTask) then
     fStartTask.Wait(30000);
   fStartTask := TTask.Run(
-  procedure
-  var
+    procedure
+    var
+      vEnabled : Boolean;
+      vIdx, vChIndex : Byte;
+      vAddr : Word;
+      vActive : TGUID;
+      vChannels : IdmChannels;
+      vResult : TProgrammerError;
+    begin
+      vResult := peAnyError;
+      FreezeModules;
+      try
+        Sleep(50);
+        try
+          if ActiveProgrammerSelected then
+          begin
+            vAddr := fProgrammerController.ActiveProgrammerBaseAddr;
+            if FindProgrammerIdx(vAddr, vIdx) then
+            begin
+              vActive := ImbProgrammer(fProgrammers[vIdx]).SupportedChip;
+              if (ActiveCountByGuid(vActive) > 0)
+              and Supports(ImbProgrammer(fProgrammers[vIdx]), IdmChannels, vChannels) then
+              begin
+                TThread.Synchronize(nil,
+                procedure
+                begin
+                  fEventSubscribers.Execute(Self, C_ProgrammerStarted, nil);
+                end
+                );
+                vChIndex := 0;
+                while vChIndex < vChannels.Count do
+                begin
+                  vEnabled := PositionProcessed(vChIndex+1, vActive);
+                  //ImbProgrammer(fProgrammers[vIdx]).Enabled[vChIndex] := vEnabled;
+                  if vEnabled and ACopyFromPositions then
+                    vEnabled := SendFromPositionToBoard(vChIndex+1);
+                  ImbProgrammer(fProgrammers[vIdx]).Enabled[vChIndex] := vEnabled;
+                  Inc(vChIndex);
+                end;
+                if ImbProgrammer(fProgrammers[vIdx]).StartOperation(AOperation) then
+                  vResult := peNoErrors
+                else
+                  vResult := peErrorOnStart;
+                vChannels := nil;
+              end else
+                vResult:= peNoActivePositions;
+            end else
+              vResult:= peNoModuleFinded;
+          end else
+            vResult:= peNoSelectedProgrammer;
+        except
+          vResult := peException;
+        end;
+      finally
+        fLastError := vResult;
+        if vResult <> peNoErrors then
+        begin
+          UnFreezeModules;
+          TThread.Synchronize(nil,
+          procedure
+          begin
+            fEventSubscribers.Execute(Self, C_ProgrammerStartError, Pointer(vResult));
+          end
+          );
+        end;
+        fStartTask := nil;
+      end;
+    end
+  );
+end;
+
+function TPosListProgrammerExtention.StartOperation(AOperation: Cardinal; ACopyFromPositions: Boolean): TProgrammerError;
+var
   vEnabled : Boolean;
   vIdx, vChIndex : Byte;
   vAddr : Word;
   vActive : TGUID;
   vChannels : IdmChannels;
-  vResult : TProgrammerError;
-  begin
-    vResult := peAnyError;
-    FreezeModules;
-    try
-      Sleep(50);
-      try
-        if ActiveProgrammerSelected then
-        begin
-          vAddr := fProgrammerController.ActiveProgrammerBaseAddr;
-          if FindProgrammerIdx(vAddr, vIdx) then
-          begin
-            vActive := ImbProgrammer(fProgrammers[vIdx]).SupportedChip;
-            if (ActiveCountByGuid(vActive) > 0)
-            and Supports(ImbProgrammer(fProgrammers[vIdx]), IdmChannels, vChannels) then
-            begin
-              TThread.Synchronize(nil,
-              procedure
-              begin
-                fEventSubscribers.Execute(Self, C_ProgrammerStarted, nil);
-              end
-              );
-              vChIndex := 0;
-              while vChIndex < vChannels.Count do
-              begin
-                vEnabled := PositionProcessed(vChIndex+1, vActive);
-                //ImbProgrammer(fProgrammers[vIdx]).Enabled[vChIndex] := vEnabled;
-                if vEnabled and ACopyFromPositions then
-                  vEnabled := SendFromPositionToBoard(vChIndex+1);
-                ImbProgrammer(fProgrammers[vIdx]).Enabled[vChIndex] := vEnabled;
-                Inc(vChIndex);
-              end;
-              if ImbProgrammer(fProgrammers[vIdx]).StartOperation(AOperation) then
-                vResult := peNoErrors
-              else
-                vResult := peErrorOnStart;
-              vChannels := nil;
-            end else
-              vResult:= peNoActivePositions;
-          end else
-            vResult:= peNoModuleFinded;
-        end else
-          vResult:= peNoSelectedProgrammer;
-      except
-        vResult := peException;
-      end;
-    finally
-      fLastError := vResult;
-      if vResult <> peNoErrors then
-      begin
-        UnFreezeModules;
-        TThread.Synchronize(nil,
-        procedure
-        begin
-          fEventSubscribers.Execute(Self, C_ProgrammerStartError, Pointer(vResult));
-        end
-        );
-      end;
-      fStartTask := nil;
-    end;
-  end);
-end;
-
-function TPosListProgrammerExtention.StartOperation(AOperation: Cardinal; ACopyFromPositions: Boolean): TProgrammerError;
-var
-vEnabled : Boolean;
-vIdx, vChIndex : Byte;
-vAddr : Word;
-vActive : TGUID;
-vChannels : IdmChannels;
 begin
   Result := peAnyError;
   FreezeModules;
@@ -688,7 +702,7 @@ end;
 
 function TPosListProgrammerExtention.GetRegisters(ABoardPosition: Byte; const ADest: IChipAbstract): boolean;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   Result := Assigned(ADest)
           and FindProgrammerIdx(ADest.ChipGUID, vIdx)

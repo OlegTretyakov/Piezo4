@@ -1,6 +1,7 @@
 unit DeviceModuleInterface;
 
 interface
+
 type  
   IDeviceModule = interface(IInterface)
    ['{10A48D71-EDA4-4423-9C74-6E38946499DE}']

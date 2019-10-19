@@ -1,8 +1,14 @@
 unit PositionController;
 
 interface
-  uses AbstractExtention, ByListPositionInstallerInterface,
-  Vodopad.EventList, EventBusInterface, dmPositionControllerInterface;
+
+  uses
+    AbstractExtention,
+    ByListPositionInstallerInterface,
+    Vodopad.EventList,
+    EventBusInterface,
+    dmPositionControllerInterface;
+
   type
   TPosListPositionControllerExtention = class;
   TPositionControllerExtention = class(TAbstractExtention, IdmPositionController)
@@ -56,18 +62,25 @@ interface
     property ProtectTimeStamp:TDateTime read GetProtectTimeStamp;
    public
   end;
+
 implementation
-uses System.SysUtils, AbstractDeviceInterface,
-PositionListInterface, PositionInterface, ExtentionsListInterface,
-dmVoltageConsts, System.DateUtils;
+
+uses
+System.SysUtils,
+System.DateUtils,
+AbstractDeviceInterface,
+PositionListInterface,
+PositionInterface,
+ExtentionsListInterface,
+dmVoltageConsts;
 
 { TPosListPositionControllerExtention }
 
 procedure TPosListPositionControllerExtention.AfterCreate;
 var  
-vDM : IDeviceModules;
-vEB : IEventBus;
-vIdx : Byte;
+  vDM : IDeviceModules;
+  vEB : IEventBus;
+  vIdx : Byte;
 begin
   inherited;
   fEventSubscribers := TCustomObjEventList.Create;
@@ -93,7 +106,7 @@ end;
 
 procedure TPosListPositionControllerExtention.BeforeDestroy;
 var
-vEB : IEventBus;
+  vEB : IEventBus;
 begin
   if Supports(fControllerObj, IEventBus, vEB) then
     vEB.Remove(OnEvent);
@@ -154,9 +167,9 @@ end;
 
 procedure TPosListPositionControllerExtention.OnEvent(Sender: TObject; Event: TGUID; Params: Pointer);
 {var
-i : Word;
-vList : IPositionsList;
-vPosition : IPosition; }
+  i : Word;
+  vList : IPositionsList;
+  vPosition : IPosition; }
 begin
   { не нужно!!! Active должно работать только в одну сторону: позиция -> плата
   if IsEqualGUID(Event, C_OnEnabledChanged) then
@@ -194,8 +207,8 @@ end;
 
 procedure TPositionControllerExtention.AfterCreate;
 var
-vPosition : IPosition;
-vExtList : IExtentions;
+  vPosition : IPosition;
+  vExtList : IExtentions;
 begin
   inherited;
   fControllerExt := nil;
@@ -256,7 +269,7 @@ end;
 procedure TPositionControllerExtention.SetEnabled(Value: boolean);
 begin
   if Assigned(fControllerExt) and (fBoardPos > 0) then
-     fControllerExt.SetEnabled(fBoardPos-1, Value);
+    fControllerExt.SetEnabled(fBoardPos-1, Value);
 end;
 
 end.

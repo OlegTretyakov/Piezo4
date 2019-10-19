@@ -1,8 +1,14 @@
 unit ExtentionsList;
 
 interface
-  uses System.Classes, Vodopad.ObjectList, AbstractExtention, ExtentionsListInterface;
+  uses
+  System.Classes,
+  Vodopad.ObjectList,
+  AbstractExtention,
+  ExtentionsListInterface;
+
   type
+
    TExtentions = class(TComponent, IExtentions)
    private  
     fExtList : TExObjectList;
@@ -29,14 +35,18 @@ interface
     procedure Delete(const AExtentionClass : TAbstractExtentionClass); stdcall;
     procedure Clear; stdcall;
   end;
+
+
 implementation
- uses System.SysUtils;
+
+uses
+  System.SysUtils;
 
 { TExtentions }  
 
 constructor TExtentions.Create(AOwner : TComponent);
 var
-vTmp : IExtentionsEventSink;
+  vTmp : IExtentionsEventSink;
 begin
   inherited Create(AOwner);
   fExtList := TExObjectList.Create;
@@ -58,7 +68,7 @@ end;
 
 function TExtentions.Find(var AExtIdx: Word; IID: TGUID; out Obj): boolean;
 var
-vExtIdx : word;
+  vExtIdx : word;
 begin
   vExtIdx := AExtIdx;
   while (vExtIdx < fExtList.Count) do
@@ -81,7 +91,7 @@ end;
 function TExtentions.Install(const AExtentionClass: TAbstractExtentionClass;
   var AExtention): Boolean;
 var
-vExtIdx : word;
+  vExtIdx : word;
 begin
   vExtIdx := 0;
   result := not Find(vExtIdx, AExtentionClass, AExtention);
@@ -99,14 +109,14 @@ end;
  
 function TExtentions.Install(const AExtentionClass: TAbstractExtentionClass):boolean;
 var
-vExtention: TAbstractExtention;
+  vExtention: TAbstractExtention;
 begin
   result := Install(AExtentionClass, vExtention);
 end;
 
 procedure TExtentions.Delete(const AExtentionClass: TAbstractExtentionClass);
 var
-vExtIdx : word;
+  vExtIdx : word;
 begin
   vExtIdx := 0;
   while Find(vExtIdx, AExtentionClass) do
@@ -132,7 +142,7 @@ end;
 function TExtentions.Find(var AExtIdx: Word;
   const AExtentionClass: TAbstractExtentionClass): boolean;
 var
-vExtIdx : word;
+  vExtIdx : word;
 begin
   vExtIdx := AExtIdx;
   while (vExtIdx < fExtList.Count) do
@@ -153,7 +163,7 @@ end;
 
 function TExtentions.Find(var AExtIdx: Word; IID: TGUID): boolean;
 var
-vTmp : IInterface;
+  vTmp : IInterface;
 begin
   Result := Find(AExtIdx, IID, vTmp);
   vTmp := nil;
@@ -161,7 +171,7 @@ end;
 
 function TExtentions.Find(IID: TGUID; out Obj): boolean;
 var
-vExtIdx : word;
+  vExtIdx : word;
 begin
   vExtIdx := 0;
   Result := Find(vExtIdx, IID, Obj);
@@ -170,7 +180,7 @@ end;
 function TExtentions.Find(const AExtentionClass: TAbstractExtentionClass;
                             var AExtention): boolean;
 var
-vExtIdx : Word;
+  vExtIdx : Word;
 begin
   vExtIdx := 0;
   result := Find(vExtIdx, AExtentionClass, AExtention);
@@ -178,7 +188,7 @@ end;
 
 procedure TExtentions.OnAfterAdd(Sender: TObject; AIndex: integer);
 var
-vEventSink : IExtentionsEventSink;
+  vEventSink : IExtentionsEventSink;
 begin
   if Supports(Owner, IExtentionsEventSink, vEventSink) then
     vEventSink.OnAfterAdd(Self, AIndex);
@@ -187,7 +197,7 @@ end;
 
 procedure TExtentions.OnAfterDelete(Sender: TObject; AIndex: integer);
 var
-vEventSink : IExtentionsEventSink;
+  vEventSink : IExtentionsEventSink;
 begin
   if Supports(Owner, IExtentionsEventSink, vEventSink) then
     vEventSink.OnAfterDelete(Self, AIndex);
@@ -196,7 +206,7 @@ end;
 
 procedure TExtentions.OnBeforeDelete(Sender: TObject; AIndex: integer);
 var
-vEventSink : IExtentionsEventSink;
+  vEventSink : IExtentionsEventSink;
 begin
   if Supports(Owner, IExtentionsEventSink, vEventSink) then
     vEventSink.OnBeforeDelete(Self, AIndex);

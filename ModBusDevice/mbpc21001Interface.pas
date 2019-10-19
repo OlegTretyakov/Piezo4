@@ -1,7 +1,9 @@
 unit mbpc21001Interface;
 
 interface
-uses DeviceModuleInterface;
+uses
+  DeviceModuleInterface;
+
   type
   Imbpc21001Module = interface(IDeviceModule)
     ['{237D03A1-7373-4ECD-90F6-99A571526377}']  

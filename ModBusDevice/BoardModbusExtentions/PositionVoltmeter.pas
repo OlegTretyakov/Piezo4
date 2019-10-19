@@ -2,12 +2,15 @@ unit PositionVoltmeter;
 
 interface
   uses
-  AbstractExtention,
-  ByListPositionInstallerInterface,
-  Vodopad.EventList,
-  EventBusInterface,
-  dmPositionVoltmeterInterface, mbvg20401Interface;
+    AbstractExtention,
+    ByListPositionInstallerInterface,
+    Vodopad.EventList,
+    EventBusInterface,
+    dmPositionVoltmeterInterface,
+    mbvg20401Interface;
+
   type
+
   TPosListPositionVoltmeterExtention = class;
   TPositionVoltmeterExtention = class(TAbstractExtention, IPositionVoltages)
    private
@@ -20,6 +23,7 @@ interface
     {IPositionVoltages}
     procedure GetPositionVoltage(ADest : pPositionVoltages); stdcall;
   end;
+
   TPosListPositionVoltmeterExtention = class(TAbstractExtention,
                                   IByListPositionInstaller,
                                   IPositionsVoltages,
@@ -48,19 +52,23 @@ interface
    public
   end;
 
-implementation  
+implementation
+
 uses
-System.SysUtils, AbstractDeviceInterface,
-PositionInterface, ExtentionsListInterface,
-dmChallengeControllerInterface, System.DateUtils;
+  System.SysUtils,
+  System.DateUtils,
+  AbstractDeviceInterface,
+  PositionInterface,
+  ExtentionsListInterface,
+  dmChallengeControllerInterface;
 
 { TPosListPositionVoltmeterExtention }
 
 procedure TPosListPositionVoltmeterExtention.AfterCreate;
 var  
-vDM : IDeviceModules;
-vEB : IEventBus;
-vIdx : Byte;
+  vDM : IDeviceModules;
+  vEB : IEventBus;
+  vIdx : Byte;
 begin
   inherited;
   fEventSubscribers := TCustomObjEventList.Create;
@@ -104,7 +112,7 @@ end;
 
 procedure TPosListPositionVoltmeterExtention.BeforeDestroy;
 var
-vEB : IEventBus;
+  vEB : IEventBus;
 begin
   if Supports(fAnalogMeterObj, IEventBus, vEB) then
     vEB.Remove(OnEvent);
@@ -174,8 +182,8 @@ end;
 
 procedure TPositionVoltmeterExtention.AfterCreate;
 var
-vPosition : IPosition;
-vExtList : IExtentions;
+  vPosition : IPosition;
+  vExtList : IExtentions;
 begin
   inherited;
   fVoltmeterExt := nil;

@@ -2,10 +2,16 @@ unit mbvs20201Module;
 
 interface
   uses
-  System.Classes, System.Threading, DeviceModule,
-  dmPositionControllerInterface, ModBusDeviceInterface,
-  dmChannelsInterface, dmChallengeControllerInterface,
-  AbstractTag, AnalogBLock, DiscreteBlock;
+    System.Classes,
+    System.Threading,
+    DeviceModule,
+    dmPositionControllerInterface,
+    ModBusDeviceInterface,
+    dmChannelsInterface,
+    dmChallengeControllerInterface,
+    AbstractTag,
+    AnalogBLock,
+    DiscreteBlock;
 
   type
 
@@ -51,11 +57,11 @@ interface
 
 implementation 
 uses
-System.SysUtils,
-System.Math,
-System.DateUtils,
-dmVoltageConsts,
-AbstractDeviceInterface;
+  System.SysUtils,
+  System.DateUtils,
+  System.Math,
+  dmVoltageConsts,
+  AbstractDeviceInterface;
 
 const
 C_ID : Word = 202;
@@ -78,7 +84,7 @@ end; exports GetVerFunc;
 
 procedure Tmbvs20201Module.AfterCreate;
 var
-vModuleInfoBlock : TAnalogBlock;
+  vModuleInfoBlock : TAnalogBlock;
 begin
   fPositionsCount := 0;
   fAuto := False;
@@ -182,11 +188,11 @@ end;
 
 procedure Tmbvs20201Module.GetVoltageValues(ADest: pPositionsVoltages);
 var
-vVoltage : record
-  case integer of
-    0: (f: Single);
-    1: (w : array [0..1] of Word);
-  end;
+  vVoltage : record
+    case integer of
+      0: (f: Single);
+      1: (w : array [0..1] of Word);
+    end;
 begin
   if not Assigned(fEnableBlock) then
   begin
@@ -257,12 +263,11 @@ end;
 
 procedure Tmbvs20201Module.SetVoltageValues(ASource: pPositionsVoltages);
 var
-vVoltage : record
-  case integer of
-    0: (f: Single);
-    1: (w : array [0..1] of Word);
-  end;
-
+  vVoltage : record
+    case integer of
+      0: (f: Single);
+      1: (w : array [0..1] of Word);
+    end;
 begin
   if (not Assigned(fVoltageBlock)) then
     exit;

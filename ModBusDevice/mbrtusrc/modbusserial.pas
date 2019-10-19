@@ -3,7 +3,10 @@
 interface
 
 uses
-  System.Classes, ModBusDriver, AbstractTag, commtypes, crc16utils;
+  System.Classes,
+  ModBusDriver,
+  AbstractTag,
+  commtypes;
 
 type
 
@@ -17,9 +20,10 @@ type
 implementation
 
 uses
-System.Math,
-System.SysUtils,
-ProtocolTypes;
+  System.Math,
+  System.SysUtils,
+  ProtocolTypes,
+  crc16utils;
 
 procedure TModBusRTUDriver.BuildReadPacket(const ATagObj : TAbstractTag; APacket: pIOPacket);
 var
@@ -196,7 +200,7 @@ begin
         APacket.BufferToWrite[5] := vTagSize and $FF;
         APacket.BufferToWrite[6] := (vTagSize*2) and $FF;
         i := 0;
-        while (i<vTagSize) do
+        while (i < vTagSize) do
         begin
           APacket.BufferToWrite[7+i*2] := ((vAnalog.ValuesToWrite[i] and $FF00) shr 8);
           APacket.BufferToWrite[8+i*2] := vAnalog.ValuesToWrite[i] and $FF;

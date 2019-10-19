@@ -2,7 +2,8 @@
 
 interface
 
-uses Classes;
+uses
+  System.Classes;
 
 type
 
@@ -112,7 +113,7 @@ type
   {$ELSE}
   //: Defines a method called when a communication error occurs.
   {$ENDIF}
-  TCommPortErrorEvent = procedure(const APort : TObject; Error:TIOResult) of object;
+  TCommPortErrorEvent = procedure(const APort : TObject; Error : TIOResult) of object;
   //: @exclude
   //PCommPortErrorEvent = ^TCommPortErrorEvent;
 

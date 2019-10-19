@@ -1,8 +1,13 @@
 unit Vodopad.Timer;
 
 interface
-  uses WinApi.Windows, Winapi.Messages, System.Classes;
+  uses
+    WinApi.Windows,
+    Winapi.Messages,
+    System.Classes;
+
   type
+
   TvdTimer = class(TComponent)
   private
     FInterval: Cardinal;

@@ -1,10 +1,19 @@
 unit mbBoardProtocol;
 
 interface
+
 uses
-  System.Classes, RS232Phisycal, AbstractExtention, AbstractProtocol,
-  ModBusDevice, ModBusDeviceInterface, ProtocolTypes,
-  commtypes, SerialPort, ModBusSerial, AbstractTag;
+  System.Classes,
+  RS232Phisycal,
+  AbstractExtention,
+  AbstractProtocol,
+  ModBusDevice,
+  ModBusDeviceInterface,
+  ProtocolTypes,
+  commtypes,
+  SerialPort,
+  ModBusSerial,
+  AbstractTag;
       
   type
   TModBusBoardProtocol = class(TAbstractProtocol, IRS232Phisycal)
@@ -13,9 +22,9 @@ uses
     fSerialPortDriver: TSerialPortDriver;
     fModBusRTUDriver : TModBusRTUDriver;
     fDevice : TModBusDevice;
-    procedure DeviceMessage(const Sender : IModBusDevice; const AStr : string);
-    procedure DriverEvent(const Action:TIOAction; APacket:pIOPacket);
-    procedure DriverErrorEvent(Result:TProtocolIOResult; APacket : pIOPacket);
+    procedure DeviceMessage(const Sender: IModBusDevice; const AStr : string);
+    procedure DriverEvent(const Action: TIOAction; APacket : pIOPacket);
+    procedure DriverErrorEvent(Result: TProtocolIOResult; APacket : pIOPacket);
     {IRS232Phisycal}
     function IRS232Phisycal.GetPort = IRS232Phisycal_GetPort;
     function IRS232Phisycal.GetConnected = IRS232Phisycal_GetConnected;
@@ -43,24 +52,24 @@ uses
 
 implementation
 uses
-WinApi.Windows,
-System.Math,
-System.SysUtils,
-System.Inifiles,
-System.DateUtils,
-dmSysInfoInterface,
-dmChannelsInterface,
-mbvg20402Interface,
-mbProgrammerInterface,
-BoardVoltmeter,
-dmFreqMeasurerInterface,
-FreqMeasureExtention,
-dmPositionControllerInterface,
-PositionController,
-mbvg20401Interface,
-PositionVoltmeter,
-mbpc21001Interface,
-ProgrammerExtention;
+  WinApi.Windows,
+  System.Math,
+  System.SysUtils,
+  System.IniFiles,
+  System.DateUtils,
+  dmSysInfoInterface,
+  dmChannelsInterface,
+  mbvg20402Interface,
+  mbProgrammerInterface,
+  BoardVoltmeter,
+  dmFreqMeasurerInterface,
+  FreqMeasureExtention,
+  dmPositionControllerInterface,
+  PositionController,
+  mbvg20401Interface,
+  PositionVoltmeter,
+  mbpc21001Interface,
+  ProgrammerExtention;
 
 
 function GetBoardProtocolClass : TAbstractProtocolClass; stdcall;
@@ -111,7 +120,7 @@ end;
 
 function TModBusBoardProtocol.IRS232Phisycal_Connect(APort: Byte): boolean;
 var
-vTestHandle : THandle;
+  vTestHandle : THandle;
 begin
   result := False;
   fPort := 0;
@@ -178,9 +187,9 @@ end;
 
 procedure TModBusBoardProtocol.FillSysInfo(SysInfoStruct: pSysInfoStruct);
 var
-vChannels : IdmChannels;
-vSysInfo : IdmSysInfo;
-vModuleIdx : Byte;
+  vChannels : IdmChannels;
+  vSysInfo : IdmSysInfo;
+  vModuleIdx : Byte;
 begin
   inherited;
   if fDevice.Modules.Find(IdmChannels, vChannels) then
@@ -199,13 +208,13 @@ begin
     while vModuleIdx < SysInfoStruct.LoadedModulesCount  do
     begin
       if vModuleIdx = 0 then
-        SysInfoStruct.LoadedModules := Format('Total modules:%d. Module BaseAddress:%d, ID:%d, Version:%d;',
+        SysInfoStruct.LoadedModules := Format('Total modules:%d. Module base address:%d, ID:%d, Version:%d;',
         [SysInfoStruct.LoadedModulesCount,
         fDevice.Modules.Item[vModuleIdx].BaseAddress,
         fDevice.Modules.Item[vModuleIdx].ID,
         fDevice.Modules.Item[vModuleIdx].Version])
       else
-        SysInfoStruct.LoadedModules := Format('%s Module BaseAddress:%d, ID:%d, Version:%d;',
+        SysInfoStruct.LoadedModules := Format('%s Module base address:%d, ID:%d, Version:%d;',
         [SysInfoStruct.LoadedModules,
         fDevice.Modules.Item[vModuleIdx].BaseAddress,
         fDevice.Modules.Item[vModuleIdx].ID,
@@ -256,7 +265,7 @@ end;
 
 procedure TModBusBoardProtocol.DriverErrorEvent(Result: TProtocolIOResult; APacket: pIOPacket);
 var
-vStr : string;
+  vStr : string;
 begin
   if Assigned(OnProtocolError) then
   begin
@@ -287,7 +296,7 @@ end;
 
 procedure TModBusBoardProtocol.DriverEvent(const Action: TIOAction; APacket: pIOPacket);
 var
-vStr : string;
+  vStr : string;
 begin
   if Assigned(ProtocolPacket) and (Action = ioaRead) then
   begin
@@ -314,11 +323,11 @@ end;
 
 procedure TModBusBoardProtocol.SaveDBConfig(const ADest: TStrings);
 var
-vIni: TMemIniFile;
-vSysInfo : IdmSysInfo;
-vPG : ImbProgrammer;
-vModulesCount,
-vModuleIdx : Byte;
+  vIni: TMemIniFile;
+  vSysInfo : IdmSysInfo;
+  vPG : ImbProgrammer;
+  vModulesCount,
+  vModuleIdx : Byte;
 begin
   inherited;
   if not Supports(fDevice, IdmSysInfo, vSysInfo) then

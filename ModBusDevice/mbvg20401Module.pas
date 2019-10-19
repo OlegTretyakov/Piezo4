@@ -3,12 +3,17 @@ unit mbvg20401Module;
 {Измеритель напряжений}
 
 interface
-uses
-  System.Classes,
-  DeviceModule, mbvg20401Interface,
-  ModBusDeviceInterface, AbstractTag, AnalogBLock,
-  dmChannelsInterface, dmChallengeControllerInterface,
-  System.Generics.Collections;
+  uses
+    System.Classes,
+    System.Generics.Collections,
+    DeviceModule,
+    mbvg20401Interface,
+    ModBusDeviceInterface,
+    AbstractTag,
+    AnalogBLock,
+    dmChannelsInterface,
+    dmChallengeControllerInterface;
+
 type
 
   TVoltageValue = record
@@ -48,8 +53,12 @@ type
 
 
 implementation   
-uses System.SysUtils, System.Math,
-AbstractDeviceInterface, dmVoltageConsts, System.DateUtils;
+uses
+  System.SysUtils,
+  System.DateUtils,
+  System.Math,
+  AbstractDeviceInterface,
+  dmVoltageConsts;
 
 const
 C_ID : Word = 204;
@@ -75,8 +84,8 @@ end; exports GetVerFunc;
 
 procedure Tmbvg20401Module.AfterCreate;
 var
-vModuleInfoBlock : TAnalogBlock;
-vPositionIdx, vMemOffSet, vWordsTotalSize, vElementIdx: Word;
+  vModuleInfoBlock : TAnalogBlock;
+  vPositionIdx, vMemOffSet, vWordsTotalSize, vElementIdx: Word;
 begin
   fAuto := False;
   fPositionsCount := 0;
@@ -137,7 +146,7 @@ end;
 
 procedure Tmbvg20401Module.CallChallenge;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   vIdx := 0;
   while vIdx < fVoltageBlocks.Count do
@@ -156,7 +165,7 @@ end;
 
 function Tmbvg20401Module.GetAuto: Boolean;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   Result := False;
   vIdx := 0;
@@ -192,12 +201,12 @@ end;
 
 procedure Tmbvg20401Module.NotifyReadOk(Sender: TObject);
 var
-vBlockIdx, vElemIdx,  vArrIdx, vArrHi, vChangedCount : Word;
-vVoltage : record
-  case integer of
-    0: (d: Double);
-    1: (a : array [0..3] of Word);
-  end;
+  vBlockIdx, vElemIdx,  vArrIdx, vArrHi, vChangedCount : Word;
+  vVoltage : record
+    case integer of
+      0: (d: Double);
+      1: (a : array [0..3] of Word);
+    end;
 begin
   vBlockIdx := 0;
   while vBlockIdx < fVoltageBlocks.Count do
@@ -246,7 +255,8 @@ begin
 end;
 
 procedure Tmbvg20401Module.SetAuto(const Value: Boolean);
-var vIdx : Byte;
+var
+  vIdx : Byte;
 begin
   if Value = fAuto  then
     Exit;

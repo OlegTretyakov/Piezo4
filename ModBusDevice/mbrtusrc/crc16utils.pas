@@ -4,7 +4,9 @@
 
 interface
 
-uses commtypes;
+uses
+  commtypes;
+
 {:
 Verifies an package of BYTES ultil their length - 2 and returns @true
 if the value calculated is the same on that is stored in the last 2 bytes
@@ -35,7 +37,7 @@ significative.
 
 @returns(A Cardinal number with the CRC-16 calculated with length of Pkg - 2.)
 }
-function Calcul_crc(APkg: pIOPacket):Word;
+function Calcul_crc(APkg: pIOPacket): Word;
 
 implementation
 
@@ -47,7 +49,7 @@ begin
   n := ABufferLen-2;
   crc := $FFFF;
   i := 0;
-  while (i<n) do
+  while (i < n) do
   begin
     crc := crc xor Word(ABuffer[i]);
     for j:=0 to 7 do
@@ -55,7 +57,7 @@ begin
       a := crc;
       carry_flag := a and $0001;
       crc := crc shr 1;
-      if (carry_flag=1) then
+      if (carry_flag = 1) then
         crc := crc xor $A001;
     end;
     inc(i);
@@ -71,7 +73,7 @@ begin
   n:=APkg.ToWriteCount-2;
   crc := $FFFF;
   i := 0;
-  while (i<n) do
+  while (i < n) do
   begin
     crc :=crc xor Word(APkg.BufferToWrite[i]);
     for j:=0 to 7 do
@@ -79,7 +81,7 @@ begin
       a := crc;
       carry_flag := a and $0001;
       crc := crc shr 1;
-      if (carry_flag=1) then
+      if (carry_flag = 1) then
         crc := crc xor $A001;
     end;
     inc(i);

@@ -4,7 +4,14 @@
 interface
 
 uses
-  Classes, SysUtils, ProtocolTypes, MessageSpool, commtypes, CircleQueue, syncobjs, AbstractTag;
+  System.Classes,
+  System.SysUtils,
+  System.SyncObjs,
+  ProtocolTypes,
+  MessageSpool,
+  commtypes,
+  CircleQueue,
+  AbstractTag;
 
 type
   TSynMessageThreadEvents = record
@@ -30,7 +37,8 @@ type
 
 implementation
 
-uses WinApi.Windows;
+uses
+  WinApi.Windows;
 
 constructor TMessageThread.Create(AProtocolErrorCalBack : TProtocolErrorEvent; AOnTerminateNotify : TNotifyEvent);
 begin
@@ -59,10 +67,10 @@ end;
 
 procedure TMessageThread.Execute;
 var
-vMsg : TMSMsg;
-vTagObj : TAbstractTag;
-vErrorPacket : TCircleQueueItem<TIOPacket>;
-vNotifications : IProtocolNotifications;
+  vMsg : TMSMsg;
+  vTagObj : TAbstractTag;
+  vErrorPacket : TCircleQueueItem<TIOPacket>;
+  vNotifications : IProtocolNotifications;
 begin
   fEvents.MessageEvent := CreateEvent(nil, False, False, nil);
   fEvents.StopEvent := CreateEvent(nil, False, False, nil);
@@ -180,7 +188,8 @@ end;
 function TMessageThread.PostProtocolError(AError:TProtocolIOResult; AErrorPacket: TCircleQueueItem<TIOPacket>):boolean;
 begin
   try
-    if FPool.PostMessage(PSM_PROTOCOL_ERROR, Pointer(AErrorPacket), Pointer(AError), false) then
+    result := FPool.PostMessage(PSM_PROTOCOL_ERROR, Pointer(AErrorPacket), Pointer(AError), false);
+    if result then
       SetEvent(FEvents.MessageEvent);
   except
     result := False;

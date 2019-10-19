@@ -645,6 +645,7 @@ var
   GetClassFunc : function : TComponentClass; stdcall;
   vCurrPath : string;
 begin
+  result := false;
   vCurrPath := ExtractFilePath(ParamStr(0));
   if FindFirst(vCurrPath+'*.bpl', faAnyFile, searchResult) = 0 then
   try
@@ -658,8 +659,8 @@ begin
           if Assigned(GetClassFunc) then
           begin
             oFormClass := GetClassFunc;
-            Result := Assigned(oFormClass);
-            if Result then
+            result := Assigned(oFormClass);
+            if result then
               Break
             else
              FreeLibrary(oModule);
@@ -674,7 +675,7 @@ begin
     until FindNext(searchResult) <> 0;
   finally
     FindClose(searchResult);
-    if not Result then
+    if not result then
     begin
       oModule := 0;
       oFormClass := nil;
@@ -682,11 +683,11 @@ begin
   end;
 end;
 
-function TCustomBoardProcess.ICreateManualControlForm_Create(var alreadyExists : boolean):TComponent;
+function TCustomBoardProcess.ICreateManualControlForm_Create(var alreadyExists : boolean): TComponent;
 var
-vFormClass: TComponentClass;
-vLoadProc : TPackageLoad;
-vFormOnDestroyEvent : IFormOnDestroyEvent;
+  vFormClass: TComponentClass;
+  vLoadProc : TPackageLoad;
+  vFormOnDestroyEvent : IFormOnDestroyEvent;
 begin
   alreadyExists := assigned(fFormLib.FormInstance);
   if alreadyExists then
@@ -713,7 +714,8 @@ begin
       vFormOnDestroyEvent := nil;
     end;
     Result := fFormLib.FormInstance;
-  end;
+  end else
+    result := nil;
 end;
 
 procedure TCustomBoardProcess.InitProtocolLib;

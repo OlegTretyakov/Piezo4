@@ -4,11 +4,12 @@
 interface
 
 uses
-
-  CommTypes, CommPort, SysUtils, Classes,
-  {$IF defined(WIN32) or defined(WIN64) OR defined(WINCE)} Windows,{$ENDIF}
-  {$IFDEF UNIX} Serial, Unix, BaseUnix, TermIO, {$ENDIF}
-  DateUtils;
+  System.SysUtils,
+  System.Classes,
+  CommTypes,
+  CommPort,
+  WinApi.Windows,
+  System.DateUtils;
 
 
 type
@@ -81,7 +82,7 @@ type
     FParity : TSerialParity;
     FDataBits : TSerialDataBits;
     {$IF defined(WIN32) or defined(WIN64) OR defined(WINCE)}
-    FPortEventName : String;
+    FPortEventName : string;
     FSavedDCB : DCB;
     FDCB : DCB;
     FComTimeouts : COMMTIMEOUTS;
@@ -100,7 +101,7 @@ type
     procedure SetDataBits(v : TSerialDataBits);
     procedure SetCOMPort(const v : string);
     {$IF defined(WIN32) or defined(WIN64)}
-    function MakeDCBString:String;
+    function MakeDCBString : string;
     {$ENDIF}
     function COMExist(const v : string):Boolean;
   protected
@@ -188,8 +189,8 @@ var PortPrefix : array[0..0] of string = ('cuad');
 implementation
 
 uses
-System.Math,
-hsstrings;
+  System.Math,
+  hsstrings;
 
 {$IF defined(WIN32) or defined(WIN64) or defined(WINCE)}
 function CTL_CODE( DeviceType, Func, Method, Access:Cardinal):Cardinal;
@@ -273,7 +274,7 @@ begin
 
 {$IF defined(WINCE)}
 var
-  vRetries:Word;
+  vRetries : Word;
 begin
 {$IFEND}
 
@@ -464,8 +465,8 @@ begin
 {$IFDEF UNIX}
 
 var
-   r : Integer;
-   tios : termios;
+ r : integer;
+ tios : termios;
 begin
   //abre a porta
   //open the serial port

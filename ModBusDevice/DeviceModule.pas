@@ -2,9 +2,12 @@ unit DeviceModule;
 
 interface
   uses
-  System.Classes,
-  Vodopad.EventList,  ModBusDeviceInterface,
-  DeviceModuleInterface, EventBusInterface;
+    System.Classes,
+    Vodopad.EventList,
+    ModBusDeviceInterface,
+    DeviceModuleInterface,
+    EventBusInterface;
+
 type
 
   TDeviceModule = class (TComponent, IDeviceModule, IEventBus)
@@ -36,8 +39,11 @@ type
   end;
 
   TDeviceModuleClass = class of TDeviceModule;
+
 implementation
-uses System.SysUtils;
+
+uses
+  System.SysUtils;
 
 { TDeviceModule }
 

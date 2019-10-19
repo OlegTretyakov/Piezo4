@@ -3,8 +3,16 @@
 interface
 
 uses
-  SysUtils, Classes, CommTypes, ProtocolDriver,
-  ProtocolTypes, AbstractTag, CircleQueue, Windows, DiscreteBlock, AnalogBLock;
+  WinApi.Windows,
+  System.SysUtils,
+  System.Classes,
+  CommTypes,
+  ProtocolDriver,
+  ProtocolTypes,
+  AbstractTag,
+  CircleQueue,
+  DiscreteBlock,
+  AnalogBLock;
 
 type
   TModBusDriver = class(TProtocolDriver)
@@ -114,36 +122,32 @@ var
   vPacketItem : TCircleQueueItem<TIOPacket>;
   vReleasePacket : boolean;
 begin
-    vReleasePacket := true;
-    vPacketItem := FIOPacketsQueue.Acquire;
-    try
-      vIOPacket := Addr(vPacketItem.Item);
-      vIOPacket.DelayBetweenCommand := FInternalDelayBetweenCmds;
-      BuildWritePacket(ATagObj,
-                        vIOPacket);
-      if (vIOPacket.ToWriteCount < 1) then
-      begin
-        Result := ioCommError;
-        exit;
-      end;
-      if Assigned(FCommPort)
-      and FCommPort.ReallyActive then
-      begin
-        if FCommPort.IOCommandSync(iocWriteRead,
-                                        vIOPacket) then
-          Result := ParcePacket(vIOPacket, ATagObj)
-        else
-          Result := ioCommError;
-      end else
-        Result := ioNullDriver;
-    finally
-      if (result <> ioOK) then
-        vReleasePacket := false;
-      if vReleasePacket then
-        vPacketItem.Release
-      else
-        PostProtocolError(result, vPacketItem);
-    end;
+  Result := ioCommError;
+  vReleasePacket := true;
+  vPacketItem := FIOPacketsQueue.Acquire;
+  try
+    vIOPacket := Addr(vPacketItem.Item);
+    vIOPacket.DelayBetweenCommand := FInternalDelayBetweenCmds;
+    BuildWritePacket(ATagObj,
+                      vIOPacket);
+    if (vIOPacket.ToWriteCount < 1) then
+      exit;
+
+    if Assigned(FCommPort)
+    and FCommPort.ReallyActive then
+    begin
+      if FCommPort.IOCommandSync(iocWriteRead, vIOPacket) then
+        Result := ParcePacket(vIOPacket, ATagObj);
+    end else
+      Result := ioNullDriver;
+  finally
+    if (result <> ioOK) then
+      vReleasePacket := false;
+    if vReleasePacket then
+      vPacketItem.Release
+    else
+      PostProtocolError(result, vPacketItem);
+  end;
 end;
 
 function TModBusDriver.DoRead(const ATagObj : TAbstractTag): TProtocolIOResult;
@@ -153,7 +157,7 @@ var
   vReleasePacket : boolean;
   vTag : IProtocolPLCTag;
 begin
-
+  Result := ioCommError;
   vReleasePacket := true;
   vPacketItem := FIOPacketsQueue.Acquire;
   try
@@ -162,10 +166,8 @@ begin
     vIOPacket.DelayBetweenCommand := FInternalDelayBetweenCmds;
     if (vIOPacket.ToWriteCount < 1)
     or (vIOPacket.ToReadCount < 1) then
-    begin
-      Result := ioCommError;
       exit;
-    end;
+
     if Assigned(FCommPort)
     and FCommPort.ReallyActive then
     begin
@@ -176,8 +178,7 @@ begin
         if Supports(ATagObj, IProtocolPLCTag, vTag) then
           vTag.CallAfterRead;
         vTag := nil;
-      end else
-        Result := ioCommError;
+      end;
     end else
       Result := ioNullDriver;
   finally

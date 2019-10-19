@@ -3,9 +3,17 @@
 interface
 
 uses
-  SysUtils, Classes, CommPort, CommTypes, ProtocolTypes, DriverMessageThread,
-  TagsScanerThread, AbstractTag, CircleQueue, Windows,
-  System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  WinApi.Windows,
+  System.Generics.Collections,
+  CommPort,
+  CommTypes,
+  ProtocolTypes,
+  DriverMessageThread,
+  TagsScanerThread,
+  AbstractTag,
+  CircleQueue;
 
 type
   TScanableStation = class(TObject)
@@ -87,7 +95,7 @@ type
 implementation
 
 uses
-System.Math;
+  System.Math;
 
 
 constructor TProtocolDriver.Create(AOwner: TComponent);
@@ -146,14 +154,14 @@ end;
 
 destructor TProtocolDriver.Destroy;
 var
-  c:Integer;
+  i : integer;
 begin
   FDestroying := true;
-  c:=FDriverTags.Count-1;
-  while c > -1 do
+  i := FDriverTags.Count-1;
+  while i > -1 do
   begin
-    FDriverTags[c].RemoveDriver;
-    dec(c);
+    FDriverTags[i].RemoveDriver;
+    dec(i);
   end;
   SetCommPort(nil);
   StopThreads;
@@ -371,40 +379,40 @@ begin
 end;
 
 procedure TProtocolDriver.ScanRead(var oRescanAfter: Cardinal);
-procedure InternalScanBlock(const ABlock : TObjectList<TAbstractTag>);
-var
-  vBlkIdx : word;
-  vBlkNextScan : Cardinal;
-begin
-  vBlkIdx := 0;
-  TMonitor.Enter(ABlock);
-  try
-    while vBlkIdx < ABlock.Count do
-    begin
-      if (FDestroying
-      or (not assigned(CommunicationPort))
-      or (not CommunicationPort.ReallyActive)
-      or TThread.CheckTerminated) then
-        break;
-      if ABlock[vBlkIdx].NeedRescan then
+  procedure InternalScanBlock(const ABlock : TObjectList<TAbstractTag>);
+  var
+    vBlkIdx : word;
+    vBlkNextScan : Cardinal;
+  begin
+    vBlkIdx := 0;
+    TMonitor.Enter(ABlock);
+    try
+      while vBlkIdx < ABlock.Count do
       begin
-        DoRead(ABlock[vBlkIdx]);
-        if Assigned(FMessageThread) then
-          FMessageThread.ScanRead(ABlock[vBlkIdx]);
-        Sleep(5);
+        if (FDestroying
+        or (not assigned(CommunicationPort))
+        or (not CommunicationPort.ReallyActive)
+        or TThread.CheckTerminated) then
+          break;
+        if ABlock[vBlkIdx].NeedRescan then
+        begin
+          DoRead(ABlock[vBlkIdx]);
+          if Assigned(FMessageThread) then
+            FMessageThread.ScanRead(ABlock[vBlkIdx]);
+          Sleep(5);
+        end;
+        if ABlock[vBlkIdx].AutoRead then
+        begin
+          vBlkNextScan := ABlock[vBlkIdx].RemainingMilisecondsForNextScan;
+          if vBlkNextScan < oRescanAfter then
+            oRescanAfter := vBlkNextScan;
+        end;
+        inc(vBlkIdx);
       end;
-      if ABlock[vBlkIdx].AutoRead then
-      begin
-        vBlkNextScan := ABlock[vBlkIdx].RemainingMilisecondsForNextScan;
-        if vBlkNextScan < oRescanAfter then
-          oRescanAfter := vBlkNextScan;
-      end;
-      inc(vBlkIdx);
+    finally
+      TMonitor.Exit(ABlock);
     end;
-  finally
-    TMonitor.Exit(ABlock);
   end;
-end;
 var
   vTypeIdx : byte;
   vStIdx : word;
@@ -609,17 +617,17 @@ procedure TScanableStation.AddTag(const ATag : TAbstractTag);var  vIdx : Word;
   end;
 end;
 
-procedure TScanableStation.RemoveTag(const ATag : TAbstractTag);procedure InternalDeleteFrom(const ABlock : TObjectList<TAbstractTag>);varvTagIdx : Integer;begin  vTagIdx := ABlock.IndexOf(ATag);
-  if vTagIdx <> -1 then
-  begin
-    TMonitor.Enter(ABlock);
-    try
-      ABlock.Delete(vTagIdx);
-    finally
-      TMonitor.Exit(ABlock);
+procedure TScanableStation.RemoveTag(const ATag : TAbstractTag);  procedure InternalDeleteFrom(const ABlock : TObjectList<TAbstractTag>);  var    vTagIdx : Integer;  begin    vTagIdx := ABlock.IndexOf(ATag);
+    if vTagIdx <> -1 then
+    begin
+      TMonitor.Enter(ABlock);
+      try
+        ABlock.Delete(vTagIdx);
+      finally
+        TMonitor.Exit(ABlock);
+      end;
     end;
-  end;
-end;varvTypeIdx : Byte;begin
+  end;var  vTypeIdx : Byte;begin
   for vTypeIdx := 0 to 3 do
   begin
     case vTypeIdx of

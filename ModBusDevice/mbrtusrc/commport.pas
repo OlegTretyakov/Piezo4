@@ -3,7 +3,11 @@
 interface
 
 uses
-  Classes, CommTypes, CircleQueue, MessagesPool, Windows;
+  System.Classes,
+  CommTypes,
+  CircleQueue,
+  MessagesPool,
+  WinAPI.Windows;
 
 type
   TErrorEventRec = record
@@ -107,8 +111,7 @@ type
     procedure AddProtocol(AProt : TComponent);
     procedure DelProtocol(AProt : TComponent);
 
-    function IOCommandSync(ACmd : TIOCommand;
-                            APacket : pIOPacket):boolean;
+    function IOCommandSync(ACmd : TIOCommand; APacket : pIOPacket):boolean;
     {:
     Return true if the communication port is open really.
     }
@@ -128,10 +131,10 @@ type
 implementation
 
 uses
-System.SysUtils,
-ProtocolDriver,
-hsstrings,
-System.Math;
+  System.SysUtils,
+  ProtocolDriver,
+  hsstrings,
+  System.Math;
 
 
 constructor TEventNotificationThread.Create(AOnTerminateNotify : TNotifyEvent);
@@ -163,9 +166,9 @@ end;
 
 procedure TEventNotificationThread.Execute;
 var
-vMessage : TMSMsg;
-vEventItem : TCircleQueueItem<TNotifyEventRec>;
-vErrorItem : TCircleQueueItem<TErrorEventRec>;
+  vMessage : TMSMsg;
+  vEventItem : TCircleQueueItem<TNotifyEventRec>;
+  vErrorItem : TCircleQueueItem<TErrorEventRec>;
 begin
   {$IFDEF DEBUG}
     TThread.NameThreadForDebugging('Modbus serial port notification thread');
@@ -302,27 +305,27 @@ end;
 
 destructor TCommPortDriver.Destroy;
 var
-  c:Integer;
+  i : integer;
 begin
   FDestroying := true;
-  for c:=0 to High(FProtocols) do
-    TProtocolDriver(FProtocols[c]).CommunicationPort := nil;
-  for c:=0 to High(FEventInterfaces) do
-    FEventInterfaces[c].DoPortRemoved(self);
+  for i := 0 to High(FProtocols) do
+    TProtocolDriver(FProtocols[i]).CommunicationPort := nil;
+  for i := 0 to High(FEventInterfaces) do
+    FEventInterfaces[i].DoPortRemoved(self);
   Active := false;
   if assigned(FNotificationThread) then
   begin
     FNotificationThread.Stop;
     FreeAndNil(FNotificationThread);
   end;
-  SetLength(FProtocols,0);
+  SetLength(FProtocols, 0);
   inherited Destroy;
 end;
 
 procedure TCommPortDriver.AddProtocol(AProt : TComponent);
 var
-  c:Integer;
-  found, interfaced:Boolean;
+  i : integer;
+  found, interfaced : Boolean;
   vTmp : IPortDriverEventNotification;
 begin
   interfaced := Supports(AProt, IPortDriverEventNotification, vTmp);
@@ -333,9 +336,9 @@ begin
   found := false;
   if interfaced then
   begin
-    for c:=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
-      if (FEventInterfaces[c]= vTmp) then
+      if (FEventInterfaces[i]= vTmp) then
       begin
         found := true;
         break;
@@ -343,9 +346,9 @@ begin
     end;
   end else
   begin
-    for c:=0 to High(FProtocols) do
+    for i := 0 to High(FProtocols) do
     begin
-      if (FProtocols[c] = AProt) then
+      if (FProtocols[i] = AProt) then
       begin
         found := true;
         break;
@@ -357,14 +360,14 @@ begin
   begin
     if interfaced then
     begin
-      c := length(FEventInterfaces);
-      SetLength(FEventInterfaces, c+1);
-      FEventInterfaces[c] := vTmp;
+      i := length(FEventInterfaces);
+      SetLength(FEventInterfaces, i+1);
+      FEventInterfaces[i] := vTmp;
     end else
     begin
-      c:=length(FProtocols);
-      SetLength(FProtocols, c+1);
-      FProtocols[c] := AProt;
+      i := length(FProtocols);
+      SetLength(FProtocols, i+1);
+      FProtocols[i] := AProt;
     end;
   end;
   vTmp := nil;
@@ -381,7 +384,7 @@ begin
   vFound := false;
   if vInterfaced then
   begin
-    for i:=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
       if (FEventInterfaces[i] = vTmp) then
       begin
@@ -391,7 +394,7 @@ begin
     end;
   end else
   begin
-    for i:=0 to High(FProtocols) do
+    for i := 0 to High(FProtocols) do
     begin
       if (FProtocols[i] = AProt) then
       begin
@@ -444,8 +447,7 @@ begin
         DoReadError(self, AError);
     except
     end;
-  end else
-  if assigned(FNotificationThread) then
+  end else if assigned(FNotificationThread) then
   begin
     if AWriteCmd then
       vEvent := DoWriteError
@@ -483,7 +485,7 @@ begin
       DoPortOpened(Self);
     except
     end;
-    for i:=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
       if ntePortOpen in FEventInterfaces[i].NotifyThisEvents then
         FEventInterfaces[i].DoPortOpened(Self);
@@ -491,7 +493,7 @@ begin
   end else
   if assigned(FNotificationThread) and FNotificationThread.PostCommPortEvent(self, DoPortOpened) then
   begin
-    for i:=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
       if (ntePortOpen in FEventInterfaces[i].NotifyThisEvents) then
         FNotificationThread.PostCommPortEvent(self, FEventInterfaces[i].GetPortOpenedEvent);
@@ -554,7 +556,7 @@ begin
       DoPortClose(Self);
     except
     end;
-    for i :=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
       if ntePortClosed in FEventInterfaces[i].NotifyThisEvents then
         FEventInterfaces[i].DoPortClosed(Self);
@@ -562,7 +564,7 @@ begin
   end else
   if assigned(FNotificationThread) and FNotificationThread.PostCommPortEvent(self, DoPortClose) then
   begin
-    for i :=0 to High(FEventInterfaces) do
+    for i := 0 to High(FEventInterfaces) do
     begin
       if ntePortClosed in FEventInterfaces[i].NotifyThisEvents then
         FNotificationThread.PostCommPortEvent(self, FEventInterfaces[i].GetPortClosedEvent);
@@ -572,13 +574,13 @@ begin
     TThread.Synchronize(nil,
     procedure
     var
-    vIdx : integer;
+      vIdx : integer;
     begin
       try
         DoPortClose(Self);
       except
       end;
-      for vIdx :=0 to High(FEventInterfaces) do
+      for vIdx := 0 to High(FEventInterfaces) do
       begin
         if ntePortClosed in FEventInterfaces[vIdx].NotifyThisEvents then
           FEventInterfaces[vIdx].DoPortClosed(Self);
@@ -670,7 +672,7 @@ end;
 
 procedure TCommPortDriver.SetActive(Value:  Boolean);
 var
-   vOk : boolean;
+  vOk : boolean;
 begin
   if Value = FActive then
     exit;
@@ -693,8 +695,7 @@ begin
   CreateThreads;
 end;
 
-function TCommPortDriver.IOCommandSync(ACmd : TIOCommand;
-                                        APacket : pIOPacket):boolean;
+function TCommPortDriver.IOCommandSync(ACmd : TIOCommand; APacket : pIOPacket):boolean;
 begin
   Result := false;
   TMonitor.Enter(self);

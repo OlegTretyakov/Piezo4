@@ -3,10 +3,16 @@ unit mbpg21101Module;
 interface
 
 uses
-  System.Classes, DeviceModule, ModBusDeviceInterface,
-  dmChannelsInterface, mbProgrammerInterface,
-  AbstractTag, AnalogBLock, DiscreteBlock,
-  ChipAbstractInterface, Vodopad.Timer;
+  System.Classes,
+  DeviceModule,
+  ModBusDeviceInterface,
+  dmChannelsInterface,
+  mbProgrammerInterface,
+  AbstractTag,
+  AnalogBLock,
+  DiscreteBlock,
+  ChipAbstractInterface,
+  Vodopad.Timer;
 type
 
   TVirtualPosition = class(TComponent)
@@ -19,13 +25,16 @@ type
     function GetRegisters(ABoardPosition : Byte; const ADest : IChipAbstract) : boolean;
     function SetRegisters(ABoardPosition : Byte; const ASource : IChipAbstract) : boolean;
   end;
+
   TProgrammerDiscreteBlock = class(TDiscreteBlock)
    public
     property ValuesReaded;
     property ValuesToWrite;
   end;
+
   Tmbpg21101Module = class(TDeviceModule,
-                      IdmChannels, ImbProgrammer,
+                      IdmChannels,
+                      ImbProgrammer,
                       IHMITagInterface)
    private
     fPositionsCount : Word;
@@ -38,24 +47,24 @@ type
     fTimeOutTimer : TvdTimer;
     procedure OnOperationTimeOut(Sender : TObject);
     {IBlockNotifyInterface}
-    procedure NotifyReadOk(Sender:TObject); stdcall;
-    procedure NotifyReadFault(Sender:TObject);stdcall;
-    procedure NotifyWriteOk(Sender:TObject); stdcall;
-    procedure NotifyWriteFault(Sender:TObject); stdcall;
-    procedure NotifyTagChange(Sender:TObject; AChangedIn : TTagChangedIn); stdcall;
-    procedure RemoveTag(Sender:TObject);stdcall;
+    procedure NotifyReadOk(Sender: TObject); stdcall;
+    procedure NotifyReadFault(Sender: TObject);stdcall;
+    procedure NotifyWriteOk(Sender: TObject); stdcall;
+    procedure NotifyWriteFault(Sender: TObject); stdcall;
+    procedure NotifyTagChange(Sender: TObject; AChangedIn : TTagChangedIn); stdcall;
+    procedure RemoveTag(Sender: TObject); stdcall;
     {IdmChannels}
     function GetChannelsCount : word; stdcall;
-    {ImbProgrammer}  
-    function ChipSupported(GUID : TGUID):boolean; stdcall;
+    {ImbProgrammer}
+    function ChipSupported(GUID : TGUID): boolean; stdcall;
     function SupportedChip :TGUID; stdcall;
     procedure FillSupportedOperations(AOperations : TStrings);stdcall;
-    function GetEnabled(AIndex : Byte):Boolean; stdcall;
-    procedure SetEnabled(AIndex : Byte; AValue :Boolean); stdcall;
-    function Ready:Boolean;stdcall;
-    function StartOperation(AOperation : Cardinal):Boolean;stdcall;
-    function GetRegisters(ABoardPosition : Byte; const ADest : IChipAbstract) : boolean; stdcall;
-    function SetRegisters(ABoardPosition : Byte; const ASource : IChipAbstract) : boolean; stdcall;
+    function GetEnabled(AIndex : Byte): boolean; stdcall;
+    procedure SetEnabled(AIndex : Byte; AValue: boolean); stdcall;
+    function Ready: boolean; stdcall;
+    function StartOperation(AOperation : Cardinal): boolean;stdcall;
+    function GetRegisters(ABoardPosition : byte; const ADest : IChipAbstract) : boolean; stdcall;
+    function SetRegisters(ABoardPosition : byte; const ASource : IChipAbstract) : boolean; stdcall;
    protected
     procedure AfterCreate;override;
     procedure BeforeDestroy; override;
@@ -64,10 +73,10 @@ type
 
 implementation   
 uses
-Winapi.Windows,
-System.SysUtils,
-AbstractDeviceInterface,
-MilandrRev8.Consts;
+  Winapi.Windows,
+  System.SysUtils,
+  AbstractDeviceInterface,
+  MilandrRev8.Consts;
 
 const
 C_ID : Word = 211;
@@ -92,7 +101,7 @@ end; exports GetVerFunc;
 
 procedure Tmbpg21101Module.AfterCreate;
 var
-vModuleInfoBlock : TAnalogBlock;
+  vModuleInfoBlock : TAnalogBlock;
 begin
   fPositionsCount := 0;
   fCurrOperation := -1;
@@ -221,7 +230,7 @@ end;
 
 function Tmbpg21101Module.StartOperation(AOperation : Cardinal): Boolean;
 var
-vOperation : Word;
+  vOperation : Word;
 begin
   vOperation := Word(AOperation);
   Result := (fPositionsCount > 0) and (vOperation in [0..4])
@@ -316,16 +325,9 @@ begin
   inherited Destroy;
 end;
 
-{type
-TSmallIntToWord = record
-  case integer of
-    0: (s: SmallInt);
-    1: (w : Word);
-end; }
-
 function TVirtualPosition.GetRegisters(ABoardPosition: Byte; const ADest: IChipAbstract): boolean;
 var
-vBitIdx : Byte;
+  vBitIdx : Byte;
 //vAdapter : TSmallIntToWord;
 begin 
   Result := (ABoardPosition > 0)
@@ -347,7 +349,7 @@ end;
 
 function TVirtualPosition.SetRegisters(ABoardPosition: Byte; const ASource: IChipAbstract): boolean;
 var
-vBitIdx : Byte;
+  vBitIdx : Byte;
 //vAdapter : TSmallIntToWord;
 begin
   Result := (ABoardPosition > 0)

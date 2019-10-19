@@ -1,7 +1,9 @@
 unit ModBusDeviceInterface;
 
 interface
-uses System.Classes, ModBusDriver;
+uses
+  System.Classes,
+  ModBusDriver;
 
   type
   IModBusDevice = interface;

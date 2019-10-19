@@ -3,8 +3,13 @@
 interface
 
 uses
-  SysUtils, Classes, AbstractTag, ProtocolDriver,
-  ProtocolTypes, Math, System.Generics.Collections;
+  System.SysUtils,
+  System.Classes,
+  System.Math,
+  System.Generics.Collections,
+  AbstractTag,
+  ProtocolDriver,
+  ProtocolTypes;
 
 type
   TPLCBlockElement = class;
@@ -114,8 +119,8 @@ type
 implementation
 
 uses
-System.DateUtils,
-hsstrings;
+  System.DateUtils,
+  hsstrings;
 
 constructor TPLCTag.Create(AOwner: TComponent;
                             const ADriver : TProtocolDriver;
@@ -123,7 +128,7 @@ constructor TPLCTag.Create(AOwner: TComponent;
                             AType : TTagType);
 begin
   inherited Create(AOwner, AStation, AAddress, ASize, AType);
-  FValueTimeStamp:=System.DateUtils.IncMinute(Now, -10);
+  FValueTimeStamp := System.DateUtils.IncMinute(Now, -10);
   FLastReadTimeStamp := FValueTimeStamp;
   FRefreshInterval:=1000;
   FProtocolDriver:=ADriver;
@@ -347,7 +352,7 @@ end;
 
 function TPLCTag.RemainingMilisecondsForNextScan: Cardinal;
 var
-vMs : Int64;
+  vMs : Int64;
 begin
   vMS := MilliSecondsBetween(Now, FLastReadTimeStamp);
   if FRefreshInterval > vMS then
@@ -367,7 +372,7 @@ end;
 
 destructor TPLCBlockElement.Destroy;
 var
-  i:Integer;
+  i : integer;
 begin
   if Assigned(FPLCTag) then
   begin
@@ -390,7 +395,7 @@ end;
 procedure TPLCBlockElement.AddCallBacks(const AObj:TObject);
 var
   vObj : IHMITagInterface;
-  i : Integer;
+  i : integer;
   vpTag : Pointer;
 begin
   if not Supports(AObj, IHMITagInterface, vObj) then
@@ -414,7 +419,7 @@ end;
 
 procedure TPLCBlockElement.RemoveCallBacks(const AObj:TObject);
 var
-  i,h : Integer;
+  i,h : integer;
   found : Boolean;
   vObj : IHMITagInterface;
 begin
@@ -452,7 +457,7 @@ end;
 
 procedure TPLCBlockElement.NotifyChange(AChangedIn : TTagChangedIn);
 var
-  i : Integer;
+  i : integer;
   n : TNotifyEvent;
   ni : Pointer;
 begin
@@ -477,7 +482,7 @@ end;
 
 procedure TPLCBlockElement.NotifyReadOk;
 var
-  i:Integer;
+  i : integer;
   n : TNotifyEvent;
   ni : Pointer;
 begin
@@ -501,7 +506,7 @@ end;
 
 procedure TPLCBlockElement.NotifyReadFault;
 var
-  i : Integer;
+  i : integer;
   n : TNotifyEvent;
   ni : Pointer;
 begin
@@ -523,11 +528,11 @@ end;
 
 procedure TPLCBlockElement.NotifyWriteOk;
 var
-  i : Integer;
+  i : integer;
   n : TNotifyEvent;
   ni : Pointer;
 begin
-  for i:=0 to High(FNotificationInterfaces) do
+  for i := 0 to High(FNotificationInterfaces) do
   begin
     try
       ni := FNotificationInterfaces[i];
@@ -547,7 +552,7 @@ end;
 
 procedure TPLCBlockElement.NotifyWriteFault;
 var
-  i : Integer;
+  i : integer;
   n : TNotifyEvent;
   ni : Pointer;
 begin

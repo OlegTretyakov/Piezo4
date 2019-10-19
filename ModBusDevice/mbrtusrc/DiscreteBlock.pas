@@ -1,7 +1,11 @@
 unit DiscreteBlock;
 
 interface
-  uses System.Classes, AbstractTag, PLCTag, ProtocolDriver, ProtocolTypes;
+  uses
+    System.Classes,
+    AbstractTag, PLCTag,
+    ProtocolDriver,
+    ProtocolTypes;
 
   type
 
@@ -40,7 +44,9 @@ interface
 
 implementation
 
-uses System.SysUtils, hsstrings;
+uses
+  System.SysUtils,
+  hsstrings;
 
 { TDiscreteBlock }
 
@@ -50,7 +56,7 @@ constructor TDiscreteBlock.Create(AOwner: TComponent;
                                   ASize: TDiscreteSize;
                                   AReadOnly: boolean);
 var
-vTagType : TTagType;
+  vTagType : TTagType;
 begin
   if AReadOnly then
     vTagType := ttDiscrete
@@ -80,8 +86,8 @@ end;
 
 procedure TDiscreteBlock.SetReadedValue(AIndex: Word; const Value: boolean);
 var
-vObj : TPLCBlockElement;
-vObjI : IProtocolTag;
+  vObj : TPLCBlockElement;
+  vObjI : IProtocolTag;
 begin
   if (FReadedValues[AIndex] <> Value) then
   begin
@@ -102,7 +108,7 @@ end;
 
 procedure TDiscreteBlock.WriteOK;
 var
-vIdx : word;
+  vIdx : word;
 begin
   inherited;
   vIdx := 0;

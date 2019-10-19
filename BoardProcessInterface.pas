@@ -1,7 +1,9 @@
 unit BoardProcessInterface;
 
 interface
-  uses LoggerInterface;
+  uses
+    LoggerInterface;
+
   type  
   TCBPEventParams = record
     Board : TObject;

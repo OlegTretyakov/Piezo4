@@ -2,12 +2,13 @@ unit CircleQueue;
 
 interface
   uses
-  System.Classes,
-  System.Generics.Collections,
-  System.SyncObjs;
+    System.Classes,
+    System.Generics.Collections,
+    System.SyncObjs;
 
   type
    TCircleQueue<T> = class;
+
    TCircleQueueItem<T> = class(TObject)
    private
     FOwner : TCircleQueue<T>;
@@ -17,6 +18,7 @@ interface
    constructor Create(const AOwner : TCircleQueue<T>);
    procedure Release;
   end;
+
   TCircleQueue<T> = class(TObjectList<TCircleQueueItem<T>>)
   protected
     FCS : TCriticalSection;
@@ -31,13 +33,17 @@ interface
    procedure Release(const AItem : TCircleQueueItem<T>);
    property AcquiredCount : Word read fAcquiredCount;
  end;
+
+
+
 implementation
 
-uses System.SysUtils;
+uses
+  System.SysUtils;
 
 
 
-{ TItem<T> }
+{ TCircleQueueItem<T> }
 
 constructor TCircleQueueItem<T>.Create(const AOwner : TCircleQueue<T>);
 begin
@@ -120,7 +126,7 @@ end;
 
 procedure TCircleQueue<T>.InternalRelease(const AItem: TCircleQueueItem<T>);
 var
-vIdx : Word;
+  vIdx : Word;
 begin
   vIdx := 0;
   while vIdx < Count do

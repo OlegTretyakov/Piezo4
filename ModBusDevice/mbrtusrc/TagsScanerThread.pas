@@ -4,14 +4,22 @@
 interface
 
 uses
-  Classes, SysUtils, AbstractTag, DriverMessageThread, MessageSpool, syncobjs,
-  ProtocolTypes, CircleQueue, Windows;
+  System.Classes,
+  System.SysUtils,
+  System.SyncObjs,
+  WinApi.Windows,
+  AbstractTag,
+  DriverMessageThread,
+  MessageSpool,
+  ProtocolTypes,
+  CircleQueue;
 
 type
   TScanThreadEvents = record
     MessageEvent,
     StopEvent : THandle;
   end;
+
   TScanThread = class(TThread)
   private
     FScanEnabled : Boolean;
@@ -92,8 +100,8 @@ end;
 
 procedure TScanThread.Execute;
 var
-vWaitTimeOut : Cardinal;
-vScanEnabled : Boolean;
+  vWaitTimeOut : Cardinal;
+  vScanEnabled : Boolean;
 begin
   {$IFDEF DEBUG}
     TThread.NameThreadForDebugging('Modbus driver scanner thread');
@@ -141,8 +149,8 @@ end;
 
 procedure TScanThread.CheckPool;
 var
-vMsg : TMSMsg;
-vTagObj : TAbstractTag;
+  vMsg : TMSMsg;
+  vTagObj : TAbstractTag;
 begin
   while (not Terminated) and
         FPool.PeekMessage(vMsg, PSM_TAGSCANREAD, PSM_TAGSCANWRITE) do

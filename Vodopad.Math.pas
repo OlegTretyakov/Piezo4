@@ -1,7 +1,8 @@
 unit Vodopad.Math;
 
 interface
-uses System.SysUtils;
+uses
+  System.SysUtils;
 
 function BytesToHexStr(const bytes: TBytes): string; overload;
 function BytesToHexStr(const bytes: Array of byte): string; overload;

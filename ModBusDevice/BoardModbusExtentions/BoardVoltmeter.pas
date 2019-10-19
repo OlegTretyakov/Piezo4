@@ -1,13 +1,14 @@
 unit BoardVoltmeter;
 
 interface
-uses
 
+uses
   AbstractExtention,
   Vodopad.EventList,
   EventBusInterface,
   mbvg20402Interface,
   dmBoardVoltmeterInterface;
+
   type
 
   TBoardVoltmeterExtention = class(TAbstractExtention,
@@ -33,16 +34,18 @@ uses
 
 implementation
 uses
-System.SysUtils, AbstractDeviceInterface,
-PositionInterface, ExtentionsListInterface;
+  System.SysUtils,
+  AbstractDeviceInterface,
+  PositionInterface,
+  ExtentionsListInterface;
 
 { TBoardVoltmeterExtention }
 
 procedure TBoardVoltmeterExtention.AfterCreate;
 var
-vDM : IDeviceModules;
-vEB : IEventBus;
-vIdx : Byte;
+  vDM : IDeviceModules;
+  vEB : IEventBus;
+  vIdx : Byte;
 begin
   inherited;
   fEventSubscribers := TCustomObjEventList.Create;
@@ -66,7 +69,7 @@ end;
 
 procedure TBoardVoltmeterExtention.BeforeDestroy;
 var
-vEB : IEventBus;
+  vEB : IEventBus;
 begin
   if Supports(fBoardVolmeterObj, IEventBus, vEB) then
     vEB.Remove(OnEvent);

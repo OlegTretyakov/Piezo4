@@ -2,16 +2,26 @@ unit ModBusDevice;
 
 interface
   uses
-  WinApi.Windows, System.Classes, System.SysUtils, Vodopad.ObjectList,
-  Vodopad.EventList,
-  AbstractDeviceInterface, Vodopad.Timer,
-  ModBusDriver, DiscreteBlock, AnalogBLock, DeviceModule, ModBusDeviceInterface, EventBusInterface;
+    WinApi.Windows,
+    System.Classes,
+    System.SysUtils,
+    Vodopad.ObjectList,
+    Vodopad.EventList,
+    AbstractDeviceInterface,
+    Vodopad.Timer,
+    ModBusDriver,
+    DiscreteBlock,
+    AnalogBLock,
+    DeviceModule,
+    ModBusDeviceInterface,
+    EventBusInterface;
 
 type
   IModuleInstaller = interface(IDeviceModules)
     ['{FA35B3C3-9F41-4399-AD9E-4236AD14E7E9}']
     procedure Install(const AModuleClass : TDeviceModuleClass; BaseAddres : Word);stdcall;
   end;
+
   TDeviceModules = class(TComponent, IDeviceModules, IModuleInstaller)
    strict private
     fModules : TExObjectList;
@@ -36,7 +46,7 @@ type
     procedure Delete(IID: TGUID); stdcall;
     procedure Clear; stdcall;
   end;
-  TModBusDevice = class;
+
   TModBusDevice = class(TComponent, IModBusDevice, IEventBus)
    strict private
     fPingTimer : TvdTimer;
@@ -80,17 +90,19 @@ type
 
 implementation
 uses
-System.DateUtils,
-System.Math,
-RS232Phisycal,
-Vodopad.Math,
-System.IniFiles,
-DeviceModuleInterface,
-dmSerialSetterInterface,
-dmSysInfoInterface,
-mbsiControlInterface,
-mbPluginManager;
+  System.DateUtils,
+  System.Math,
+  RS232Phisycal,
+  Vodopad.Math,
+  System.IniFiles,
+  DeviceModuleInterface,
+  dmSerialSetterInterface,
+  dmSysInfoInterface,
+  mbsiControlInterface,
+  mbPluginManager;
+
 type
+
 TModulesManager = class(TMBPM)
   procedure FindPluginFiles; override;
 end;
@@ -120,7 +132,8 @@ begin
 end;
 
 procedure TDeviceModules.Delete(IID: TGUID);
-var vIdx : word;
+var
+  vIdx : word;
 begin
   vIdx := 0;
   while Find(vIdx, IID) do
@@ -146,7 +159,8 @@ begin
 end;
 
 function TDeviceModules.Find(ModuleIID: TGUID): Boolean;
-var vIdx : word;
+var
+  vIdx : word;
 begin
   vIdx := 0;
   Result := Find(vIdx, ModuleIID);
@@ -160,8 +174,8 @@ end;
 
 function TDeviceModules.Find(var AIdx: Word; IID: TGUID): boolean;
 var
-vIdx : word;
-vTmp : IInterface;
+  vIdx : word;
+  vTmp : IInterface;
 begin
   vIdx := AIdx;
   while (vIdx < fModules.Count) do
@@ -194,7 +208,8 @@ begin
 end;
 
 function TDeviceModules.Find(IID: TGUID; var Obj): boolean;
-var vIdx : Word;
+var
+  vIdx : Word;
 begin
   vIdx := 0;
   result := Find(vIdx, IID, Obj);
@@ -202,8 +217,8 @@ end;
 
 procedure TDeviceModules.Install(const AModuleClass: TDeviceModuleClass; BaseAddres : Word);
 var
-vDevice : IModBusDevice;
-vModule : IDeviceModule;
+  vDevice : IModBusDevice;
+  vModule : IDeviceModule;
 begin
   if Supports(Self.Owner, IModBusDevice, vDevice) then
   try
@@ -286,7 +301,7 @@ end;
 
 procedure TModBusDevice.OnDeviceInit(Sender: TObject);
 var
-vmbSi : ImbsiControl;
+  vmbSi : ImbsiControl;
 begin
   if Supports(fSysInfoModule, ImbsiControl, vmbSi)
   and vmbSi.Init then
@@ -305,7 +320,7 @@ end;
 
 procedure TModBusDevice.OnDevicePing(Sender: TObject);
 var
-vmbSi : ImbsiControl;
+  vmbSi : ImbsiControl;
 begin
   if Supports(fSysInfoModule, ImbsiControl, vmbSi) then
   begin
@@ -354,8 +369,8 @@ end;
 
 function TModBusDevice.CreateSysInfoInstance : boolean;
 var
-vModuleClass : TDeviceModuleClass;
-vModuleId, vModuleVer : Word;
+  vModuleClass : TDeviceModuleClass;
+  vModuleId, vModuleVer : Word;
 begin
   fModules.Clear;
   if Assigned(fSysInfoModule) then
@@ -369,8 +384,8 @@ end;
 
 procedure TModBusDevice.SetConnected(Value: Boolean);
 var
-vSysInfo : IdmSysInfo;
-vss : ISerialSetter;
+  vSysInfo : IdmSysInfo;
+  vss : ISerialSetter;
 begin
   if fConnected = Value then
     Exit;
@@ -437,16 +452,16 @@ end;
 
 procedure TModulesManager.FindPluginFiles;
 var
-vEnabled : Boolean;
-searchResult : TSearchRec;
-vPluginInfo : TMBPluginInfo;
-GetClassFunc : function : TDeviceModuleClass; stdcall;
-GetIDFunc,
-GetVerFunc : function : Word; stdcall;
-vPluginsPath, vModBusPluginsExt,
-vIniName  : string;
-vIniFile : TIniFile;
-vUpdateIni : Boolean;
+  vEnabled : Boolean;
+  searchResult : TSearchRec;
+  vPluginInfo : TMBPluginInfo;
+  GetClassFunc : function : TDeviceModuleClass; stdcall;
+  GetIDFunc,
+  GetVerFunc : function : Word; stdcall;
+  vPluginsPath, vModBusPluginsExt,
+  vIniName  : string;
+  vIniFile : TIniFile;
+  vUpdateIni : Boolean;
 begin
   vModBusPluginsExt := 'bpl';
   vIniName := ChangeFileExt(GetModuleName(HInstance),'.ini');
@@ -513,12 +528,12 @@ end;
 
 procedure TSysInfoManager.FindPluginFiles; 
 var
-searchResult : TSearchRec;
-vPluginInfo : TMBPluginInfo;
-GetClassFunc : function : TDeviceModuleClass; stdcall;
-GetIDFunc,
-GetVerFunc : function : Word; stdcall;
-vCurrentPath : string;
+  searchResult : TSearchRec;
+  vPluginInfo : TMBPluginInfo;
+  GetClassFunc : function : TDeviceModuleClass; stdcall;
+  GetIDFunc,
+  GetVerFunc : function : Word; stdcall;
+  vCurrentPath : string;
 begin
   vCurrentPath := ExtractFilePath(GetModuleName(HInstance));
   if FindFirst(vCurrentPath+'*.bpl', faAnyFile, searchResult) = 0 then

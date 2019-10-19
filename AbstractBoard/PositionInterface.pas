@@ -11,6 +11,8 @@ interface
     property BoardPos : byte read GetBoardPos;
     property Active : boolean read GetActive write SetActive; 
   end;
+
+
 implementation
 
 end.

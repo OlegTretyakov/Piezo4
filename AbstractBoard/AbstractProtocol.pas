@@ -1,7 +1,9 @@
 unit AbstractProtocol;
 
 interface
-  uses AbstractExtention, System.Classes;
+  uses
+    System.Classes, AbstractExtention;
+
   type
    TSysInfoStruct = record
      ProtocolVersion,
@@ -13,10 +15,14 @@ interface
      ProtocolDestription,
      LoadedModules : string;
    end;
+
    pSysInfoStruct = ^TSysInfoStruct;
+
    TAbstractProtocol = class;
+
    TProtocolEvent = procedure (Sender : TAbstractProtocol; const AStr : string) of object;
    TProtocolPacket = procedure (Sender : TAbstractProtocol; const AStr : string) of object;
+
    TAbstractProtocol = class (TAbstractExtention)
     private
      fOnProtocolMessage : TProtocolEvent;

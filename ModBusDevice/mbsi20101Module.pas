@@ -2,8 +2,13 @@ unit mbsi20101Module;
 
 interface
   uses
-   AbstractTag, DeviceModule, AnalogBLock, ModBusDeviceInterface,
-   mbsiControlInterface, dmSysInfoInterface;
+    AbstractTag,
+    DeviceModule,
+    AnalogBLock,
+    ModBusDeviceInterface,
+    mbsiControlInterface,
+    dmSysInfoInterface;
+
   type
   TSysInfoModule = class(TDeviceModule,
                       ImbsiControl,
@@ -42,13 +47,13 @@ interface
 
 implementation
 uses
-System.SysUtils,
-System.Classes,
-System.IniFiles,
-System.Math,
-mbPluginManagerInterface,
-AbstractDeviceInterface,
-dmChallengeControllerInterface;
+  System.SysUtils,
+  System.Classes,
+  System.IniFiles,
+  System.Math,
+  mbPluginManagerInterface,
+  AbstractDeviceInterface,
+  dmChallengeControllerInterface;
 
 const
 C_ID : Word = 201;
@@ -86,19 +91,19 @@ end;
 
 function TSysInfoModule.Init: Boolean;
 var
-vInstaller : IModuleInstaller;
-vPluginManager : IMBPM;
-vModuleBaseAddrBlock,
-vModuleIdVerBlock  : TAnalogBlock;
-vModuleClass : TDeviceModuleClass;
-vSystemModulesIdx,
-vIdVerBlockMemAddr,
-vModuleIDValue, vModuleVerValue : Word;
-vChallengeCtrl : IdmChallengeController;
-vIniFile : TIniFile;
-vUpdateIni : Boolean;
-vCmdIdx : Byte;
-vCmdConditions : TStringList;
+  vInstaller : IModuleInstaller;
+  vPluginManager : IMBPM;
+  vModuleBaseAddrBlock,
+  vModuleIdVerBlock  : TAnalogBlock;
+  vModuleClass : TDeviceModuleClass;
+  vSystemModulesIdx,
+  vIdVerBlockMemAddr,
+  vModuleIDValue, vModuleVerValue : Word;
+  vChallengeCtrl : IdmChallengeController;
+  vIniFile : TIniFile;
+  vUpdateIni : Boolean;
+  vCmdIdx : Byte;
+  vCmdConditions : TStringList;
 begin
   fLastSuccChallenge := Now;
   fSystemChanged := false;

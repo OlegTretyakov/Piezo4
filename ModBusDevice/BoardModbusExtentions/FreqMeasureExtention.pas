@@ -1,8 +1,13 @@
 unit FreqMeasureExtention;
 
 interface
-uses AbstractExtention, dmFreqMeasurerInterface,
-  ByListPositionInstallerInterface, Vodopad.EventList, EventBusInterface;
+uses
+  AbstractExtention,
+  dmFreqMeasurerInterface,
+  ByListPositionInstallerInterface,
+  Vodopad.EventList,
+  EventBusInterface;
+
   type
   TPosListFreqMeasureExtention = class;
   TPositionFreqMeasureExtention = class(TAbstractExtention, IdmPositionFreqResult)
@@ -41,26 +46,29 @@ uses AbstractExtention, dmFreqMeasurerInterface,
     procedure EventMethodRemove(const AMethod: TCustomObjEvent); stdcall;
    public
     {IdmFreqStarter}
-    function StartOnceMeasure: Boolean; overload; stdcall;
-    function StartOnceMeasure(ATime{mSec*100}:Word): Boolean; overload; stdcall;
-    function StartSeriesMeasure: Boolean; overload; stdcall;
-    function StartSeriesMeasure(ATime{mSec*100}:Word; AQuant : Byte): Boolean; overload; stdcall;   
-    function StartPermanentlyMeasure: Boolean; overload; stdcall;
-    function StartPermanentlyMeasure(ATime{mSec*100}:Word): Boolean; overload; stdcall;   
+    function StartOnceMeasure: boolean; overload; stdcall;
+    function StartOnceMeasure(ATime{mSec*100}:Word): boolean; overload; stdcall;
+    function StartSeriesMeasure: boolean; overload; stdcall;
+    function StartSeriesMeasure(ATime{mSec*100}:Word; AQuant : Byte): boolean; overload; stdcall;
+    function StartPermanentlyMeasure: boolean; overload; stdcall;
+    function StartPermanentlyMeasure(ATime{mSec*100}:Word): boolean; overload; stdcall;
     procedure StopPermanentlyMeasure; stdcall;
     function CalculatedTimeOut : Cardinal;stdcall;
     {IdmFreqController}
     function GetSeriesCount: Byte; stdcall;
     function GetSeriesSuccesCount: Byte; stdcall;
     {IdmFreqResults}
-    function FreqResult(AIndex : Word; const AResult : pFreqResult):Boolean; stdcall;
+    function FreqResult(AIndex : Word; const AResult : pFreqResult): boolean; stdcall;
   end;
 
 
 implementation
 uses
-System.SysUtils, AbstractDeviceInterface,
-PositionInterface, ExtentionsListInterface, System.DateUtils;
+  System.SysUtils,
+  System.DateUtils,
+  AbstractDeviceInterface,
+  PositionInterface,
+  ExtentionsListInterface;
 
 
 
@@ -68,8 +76,8 @@ PositionInterface, ExtentionsListInterface, System.DateUtils;
 
 procedure TPositionFreqMeasureExtention.AfterCreate;
 var
-vPosition : IPosition;
-vExtList : IExtentions;
+  vPosition : IPosition;
+  vExtList : IExtentions;
 begin 
   inherited;
   fFreqExt := nil;
@@ -105,10 +113,9 @@ end;
 { TPosListMeasureExtention } 
 procedure TPosListFreqMeasureExtention.AfterCreate;
 var  
-vDM : IDeviceModules;
-
-vEB : IEventBus;
-vIdx : Byte;
+  vDM : IDeviceModules;
+  vEB : IEventBus;
+  vIdx : Byte;
 begin
   inherited;
   fEventSubscribers := TCustomObjEventList.Create;
@@ -140,7 +147,7 @@ end;
 
 procedure TPosListFreqMeasureExtention.BeforeDestroy;
 var
-vEB : IEventBus;
+  vEB : IEventBus;
 begin
   if Supports(fFreqMeterObj, IEventBus, vEB) then
     vEB.Remove(OnEvent);

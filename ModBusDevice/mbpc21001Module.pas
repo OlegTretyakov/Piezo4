@@ -2,8 +2,12 @@ unit mbpc21001Module;
 
 interface
 uses
-  System.Classes, DeviceModule, mbpc21001Interface,
-  ModBusDeviceInterface, AbstractTag, AnalogBLock;
+  System.Classes,
+  DeviceModule,
+  mbpc21001Interface,
+  ModBusDeviceInterface,
+  AbstractTag,
+  AnalogBLock;
 
 type
 
@@ -20,7 +24,8 @@ type
 
 
 implementation   
-uses System.SysUtils;
+uses
+  System.SysUtils;
 
 const
 C_ID : Word = 210;
@@ -45,7 +50,7 @@ end; exports GetVerFunc;
 
 procedure Tmbpc21001Module.AfterCreate;
 var
-vModuleInfoBlock : TAnalogBlock;
+  vModuleInfoBlock : TAnalogBlock;
 begin
   vModuleInfoBlock := fModbusDevice.Driver.CreateAnalog(self, fModbusDevice.Station, BaseAddress, 2, true);
   try

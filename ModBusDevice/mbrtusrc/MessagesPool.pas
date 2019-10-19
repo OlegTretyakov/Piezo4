@@ -3,7 +3,10 @@
 interface
 
 uses
-  Classes, SysUtils, SyncObjs, CircleQueue;
+  System.Classes,
+  System.SysUtils,
+  System.SyncObjs,
+  CircleQueue;
 
 type
 
@@ -19,14 +22,15 @@ type
     function AcquireHigh: TCircleQueueItem<TMSMsg>;
     function AcquireLower: TCircleQueueItem<TMSMsg>;
    public
-    function PeekMessage(var oMsg : TMSMsg; uFilterMinMsg, uFilterMaxMsg : Cardinal): Boolean;
+    function PeekMessage(var oMsg : TMSMsg; AFilterMinMsg, AFilterMaxMsg : Cardinal): Boolean;
     function PostMessage(MsgID : Cardinal; wParam, lParam : Pointer; Priority : Boolean) : boolean;
     procedure RemoveMessage(wParam, lParam:Pointer);
   end;
 
 implementation
 
-uses hsstrings;
+uses
+  hsstrings;
 
 function TMessagesPool.AcquireHigh: TCircleQueueItem<TMSMsg>;
 var
@@ -100,43 +104,39 @@ begin
   end;
 end;
 
-function TMessagesPool.PeekMessage(var oMsg : TMSMsg; uFilterMinMsg, uFilterMaxMsg : Cardinal): Boolean;
+function TMessagesPool.PeekMessage(var oMsg : TMSMsg; AFilterMinMsg, AFilterMaxMsg : Cardinal): Boolean;
 var
   vIdx : Word;
   vItem : TCircleQueueItem<TMSMsg>;
 begin
   Result := false;
-  if self=nil then
-     exit;
   Lock;
   try
     if (AcquiredCount < 1) then
       exit;
     vIdx := 0;
-    try
-      while vIdx < Count do
+    vItem := nil;
+    while vIdx < Count do
+    begin
+      vItem := items[vIdx];
+      if (vItem.Busy) then
       begin
-        vItem := items[vIdx];
-        if (vItem.Busy) then
+        if (AFilterMinMsg > 0) and (AFilterMaxMsg >= AFilterMinMsg) then
         begin
-          if (uFilterMinMsg <> 0) and (uFilterMaxMsg <> 0) then
-          begin
-            if (vItem.Item.MsgID >= uFilterMinMsg) and (vItem.Item.MsgID <= uFilterMaxMsg) then
-              break;
-          end else
+          if (vItem.Item.MsgID >= AFilterMinMsg) and (vItem.Item.MsgID <= AFilterMaxMsg) then
             break;
-        end;
-        inc(vIdx);
+        end else
+          break;
       end;
-    finally
-      result := (vIdx < Count);
-      if result then
-      begin
-        oMsg.MsgID := vItem.Item.MsgID;
-        oMsg.lParam := vItem.Item.lParam;
-        oMsg.wParam := vItem.Item.wParam;
-        InternalRelease(vItem);
-      end;
+      inc(vIdx);
+    end;
+    result := (vIdx < Count) and assigned(vItem);
+    if result then
+    begin
+      oMsg.MsgID := vItem.Item.MsgID;
+      oMsg.lParam := vItem.Item.lParam;
+      oMsg.wParam := vItem.Item.wParam;
+      InternalRelease(vItem);
     end;
   finally
     UnLock;

@@ -5,12 +5,14 @@ interface
   System.Classes,
   System.SysUtils,
   FireDAC.Comp.Client;
+
   type
   TvdConnection = TFDCustomConnection;
   TvdTransaction = TFDTransaction;
   TvdDataSet = TFDRdbmsDataSet;
   TvdQuery = TFDQuery;
   TvdStoredProc = TFDStoredProc;
+
   IDMAccess = interface (IInterface)
     ['{DCA07C15-8F34-4DE2-9841-4E17DBF81E5A}']
     function DBHomePath : string; stdcall;

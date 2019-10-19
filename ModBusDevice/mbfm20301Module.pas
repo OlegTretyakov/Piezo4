@@ -4,10 +4,20 @@ unit mbfm20301Module;
 
 interface
 uses
-  System.Classes, DeviceModule, dmFreqMeasurerInterface,
-  ModBusDeviceInterface, dmReadInterface, dmChannelsInterface,
-  Vodopad.FloatList, Vodopad.ObjectList, Vodopad.Timer,
-  ModBusDriver, AnalogBLock, DiscreteBlock, System.Generics.Collections;
+  System.Classes,
+  System.Generics.Collections,
+  DeviceModule,
+  dmFreqMeasurerInterface,
+  ModBusDeviceInterface,
+  dmReadInterface,
+  dmChannelsInterface,
+  Vodopad.FloatList,
+  Vodopad.ObjectList,
+  Vodopad.Timer,
+  ModBusDriver,
+  AnalogBLock,
+  DiscreteBlock;
+
 type
 
   TIniConfigMeasParams = record
@@ -54,10 +64,12 @@ type
     Time : Word;{mSec*100}
     Enabled : Boolean;
   end;
+
   TFreqModuleDiscreteBlock = class(TDiscreteBlock)
   public
     property ValuesReaded;
   end;
+
   Tmbfm20301Module = class(TDeviceModule,
                         IdmChannels,
                         IdmRead,
@@ -116,9 +128,16 @@ type
 
 
 implementation   
-uses System.SysUtils, Vodopad.Math, System.IniFiles, Vodopad.CustomIniHelpers,
-System.DateUtils, AbstractTag, AbstractDeviceInterface, dmChallengeControllerInterface,
-  Winapi.Windows;
+uses
+  System.SysUtils,
+  System.DateUtils,
+  System.IniFiles,
+  Winapi.Windows,
+  Vodopad.Math,
+  Vodopad.CustomIniHelpers,
+  AbstractTag,
+  AbstractDeviceInterface,
+  dmChallengeControllerInterface;
 
 const
 C_ID : Word = 203;
@@ -145,9 +164,9 @@ end; exports GetVerFunc;
 { Tmbfm20301Module }
 procedure TIniConfigMeasParams.Read;
 var
-f : TIniFile;
-vIniName : TFileName;
-vCreate : boolean;
+  f : TIniFile;
+  vIniName : TFileName;
+  vCreate : boolean;
 begin
   vIniName := ChangeFileExt(GetModuleName(HInstance), '.ini');
   vCreate := not FileExists(vIniName);
@@ -205,8 +224,8 @@ end;
 
 procedure Tmbfm20301Module.AfterCreate;
 var
-vModuleInfoBlock : TAnalogBlock;
-vPositionsCount, vMemOffSet, vWordsTotalSize, vBlockSize, vElementIdx: Word;
+  vModuleInfoBlock : TAnalogBlock;
+  vPositionsCount, vMemOffSet, vWordsTotalSize, vBlockSize, vElementIdx: Word;
 begin
   vPositionsCount := 0;
   fTimeOutTimer := TvdTimer.Create(self);
@@ -272,7 +291,7 @@ end;
 
 procedure Tmbfm20301Module.BeforeDestroy;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   fTimeOutTimer.Enabled := false;
   if Assigned(fFreqBlocks) then
@@ -302,7 +321,7 @@ end;
 
 function Tmbfm20301Module.Read(Params: Pointer): Boolean;
 var
-vParams : pFreqMeasParams;
+  vParams : pFreqMeasParams;
 begin
   if not Assigned(Params) then
     Result := StartSeriesMeasure
@@ -415,7 +434,7 @@ end;
 
 procedure Tmbfm20301Module.OnRdyBlockChanged(Sender : TObject);
 var
-vMeasQueueItem: pMeasQueueItem;
+  vMeasQueueItem: pMeasQueueItem;
 begin
   if fMeasRdyBlock.Values[0] then
   begin
@@ -428,7 +447,7 @@ end;
 
 function Tmbfm20301Module.FreqStart(AMeasTime{mSec*100}: Word) : boolean;
 var
-vMeasQueueItem: pMeasQueueItem;
+  vMeasQueueItem: pMeasQueueItem;
 begin
   result := false;
   if not fMeasTimeBlock.ReadSyn then
@@ -467,31 +486,32 @@ begin
 end;
 
 procedure Tmbfm20301Module.FreqRead;
-function ReadFreqs : Boolean;
-var vIdx : Byte;
-begin
-  Result := false;
-  vIdx := 0;
-  while vIdx < fFreqBlocks.Count do
+  function ReadFreqs : Boolean;
+  var
+    vIdx : Byte;
   begin
-    Result := fFreqBlocks[vIdx].ReadSyn;
-    if not Result then
-      Break;
-    Inc(vIdx);
+    Result := false;
+    vIdx := 0;
+    while vIdx < fFreqBlocks.Count do
+    begin
+      Result := fFreqBlocks[vIdx].ReadSyn;
+      if not Result then
+        Break;
+      Inc(vIdx);
+    end;
   end;
-end;
 var
-vBlockIdx, vElemIdx, vPosIdx : Word;
-vPosition : TPosition;
-vMeasQueueCurrItem: pMeasQueueItem;
-vSuccCount, vQueueCount : Byte;
-vLogging : Boolean;
-vFreqLogStr : string;
-vFreq : record
-  case integer of
-    0: (d: Double);
-    1: (a : array [0..3] of Word);
-  end;
+  vBlockIdx, vElemIdx, vPosIdx : Word;
+  vPosition : TPosition;
+  vMeasQueueCurrItem: pMeasQueueItem;
+  vSuccCount, vQueueCount : Byte;
+  vLogging : Boolean;
+  vFreqLogStr : string;
+  vFreq : record
+    case integer of
+      0: (d: Double);
+      1: (a : array [0..3] of Word);
+    end;
 begin
   if fMeasureQueue.First(QiStart, vMeasQueueCurrItem) then
   try
@@ -683,9 +703,9 @@ end;
 
 procedure Tmbfm20301Module.FreezeModules;
 var
-vModules : IDeviceModules;
-vController : IdmChallengeController;
-vIdx : Word;
+  vModules : IDeviceModules;
+  vController : IdmChallengeController;
+  vIdx : Word;
 begin
   if not fFrezedProcessed then
   begin
@@ -718,7 +738,7 @@ end;
 
 procedure Tmbfm20301Module.ChallengeFreezed;
 var
-vIdx : Word;
+  vIdx : Word;
 begin
   vIdx := 0;
   while vIdx < fAutoFrezedModules.Count do
@@ -730,7 +750,7 @@ end;
 
 procedure Tmbfm20301Module.UnFreezeModules;
 var
-vIdx : Word;
+  vIdx : Word;
 begin
   vIdx := 0;
   while vIdx < fAutoFrezedModules.Count do
@@ -749,9 +769,10 @@ end;
 
 
 procedure TPosition.ApplyStaticFilter(AFilterValue : byte);
-var i, j, vRejIdx : integer;
-vRejCount : word;
-vMean, vDelta : double;
+var
+  i, j, vRejIdx : integer;
+  vRejCount : word;
+  vMean, vDelta : double;
 begin
   if (AFilterValue = 0) or (fFreqList.Count < 1) then
     exit;
@@ -840,7 +861,7 @@ end;
 
 function TMeasQueue.Add(MeasTime: Word): integer;
 var
-vItem : pMeasQueueItem;
+  vItem : pMeasQueueItem;
 begin
   New(vItem);
   vItem.State := QiAdd;
@@ -850,7 +871,7 @@ end;
 
 function TMeasQueue.First(State : TQIState; out Item: pMeasQueueItem): Boolean;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   Result := false;
   vIdx := 0;
@@ -878,7 +899,7 @@ end;
 
 function TMeasQueue.StateCount(State : TQIState): Byte;
 var
-vIdx : Byte;
+  vIdx : Byte;
 begin
   Result := 0;
   vIdx := 0;

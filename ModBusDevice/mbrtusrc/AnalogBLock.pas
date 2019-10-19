@@ -1,9 +1,14 @@
 unit AnalogBLock;
 
 interface
-  uses System.Classes, AbstractTag, PLCTag, ProtocolDriver, ProtocolTypes;
-  type
+  uses
+    System.Classes,
+    AbstractTag,
+    PLCTag,
+    ProtocolDriver,
+    ProtocolTypes;
 
+  type
   TAnalogBlock = class(TPLCTag, IProtocolAnalogTag)
    private
     FReadedValues,
@@ -26,6 +31,7 @@ interface
     destructor Destroy; override;
     property Values[AIndex : Word]: Word read GetReadedValue write SetToWriteValue;
   end;
+
   TAnalogBlockClass = class of TAnalogBlock;
   TAnalogElement = class(TPLCBlockElement)
   private
@@ -39,7 +45,9 @@ interface
 
 implementation
 
-uses System.SysUtils, hsstrings;
+uses
+  System.SysUtils,
+  hsstrings;
 
 { TAnalogBlock }
 
@@ -101,7 +109,7 @@ end;
 
 procedure TAnalogBlock.WriteOK;
 var
-vIdx : word;
+  vIdx : word;
 begin
   inherited;
   vIdx := 0;

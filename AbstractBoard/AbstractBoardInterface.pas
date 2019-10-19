@@ -2,8 +2,10 @@ unit AbstractBoardInterface;
 
 
 interface
+
   type
   TForEachPositionMethod = procedure (const APosition:TObject; PositionIndex : Word; Params : Pointer); stdcall;
+
   IAbstractBoard = interface(IInterface)
     ['{4EE4A203-4F34-4FEC-B789-4F7A4798BC1E}']
     function GetConnected : Boolean; stdcall;

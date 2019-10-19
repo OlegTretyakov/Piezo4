@@ -2,7 +2,10 @@ unit AbstractExtention;
 
 interface
 
-uses System.Classes;
+uses
+  System.Classes;
+
+
 type
   TAbstractExtention = class(TComponent)
    protected
@@ -12,8 +15,10 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   end;
+
   TAbstractExtentionClass = class of TAbstractExtention;
   TExtentionsClasses = array of TAbstractExtentionClass;
+
 implementation
 
 

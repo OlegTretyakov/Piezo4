@@ -4,9 +4,15 @@ unit mbvg20402Module;
 
 interface
 uses
-  System.Classes, DeviceModule, mbvg20402Interface,
-  ModBusDeviceInterface, AbstractTag, AnalogBLock,
-  dmBoardVoltmeterInterface, dmChallengeControllerInterface;
+  System.Classes,
+  DeviceModule,
+  mbvg20402Interface,
+  ModBusDeviceInterface,
+  AbstractTag,
+  AnalogBLock,
+  dmBoardVoltmeterInterface,
+  dmChallengeControllerInterface;
+
 type
 
    Tmbvg20402Module = class(TDeviceModule,
@@ -36,8 +42,12 @@ type
 
 
 implementation
-uses System.SysUtils, System.Math,
-dmVoltageConsts, AbstractDeviceInterface, System.DateUtils;
+uses
+  System.SysUtils,
+  System.DateUtils,
+  System.Math,
+  dmVoltageConsts,
+  AbstractDeviceInterface;
 
 const
 C_ID : Word = 204;

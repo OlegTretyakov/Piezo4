@@ -794,7 +794,6 @@ vIdx, vCount, vResCount : Word;
 vBoardExtentions :IExtentions;
 vBoardStpManager : TBoardStpExtentionManager; 
 begin
-  Result := False; 
   vCount := BoardsCount;
   vIdx := 0;
   vResCount := 0;
@@ -812,11 +811,10 @@ end;
 
 function Tcbp30.ExternalProgPowerNeded: Boolean;
 var
-vIdx, vCount, vResCount : Word;
-vBoardExtentions :IExtentions;
-vBoardStpManager : TBoardStpExtentionManager; 
+  vIdx, vCount, vResCount : Word;
+  vBoardExtentions :IExtentions;
+  vBoardStpManager : TBoardStpExtentionManager;
 begin
-  Result := False; 
   vCount := BoardsCount;
   vIdx := 0;
   vResCount := 0;
@@ -834,9 +832,9 @@ end;
 
 procedure Tcbp30.StartFinalProgramming;
 var
-vIdx, vCount : Word;
-vBoardExtentions :IExtentions;
-vBoardStpManager : TBoardStpExtentionManager; 
+  vIdx, vCount : Word;
+  vBoardExtentions :IExtentions;
+  vBoardStpManager : TBoardStpExtentionManager;
 begin
   vCount := BoardsCount;
   vIdx := 0;
@@ -852,9 +850,9 @@ end;
 
 procedure Tcbp30.DoneProgrammer;
 var
-vIdx, vCount : Word;
-vBoardExtentions :IExtentions;
-vBoardStpManager : TBoardStpExtentionManager; 
+  vIdx, vCount : Word;
+  vBoardExtentions :IExtentions;
+  vBoardStpManager : TBoardStpExtentionManager;
 begin
   vCount := BoardsCount;
   vIdx := 0;
@@ -966,7 +964,7 @@ end;
 
 procedure TBoardStpExtentionManager.MessageHandler(var message: TMessage);
 var
-vEB : IBoardEventBusExec;
+  vEB : IBoardEventBusExec;
 begin
   case message.Msg of
     C_StpMethodStarted:
@@ -1117,7 +1115,7 @@ end;
 
 procedure TBoardStpExtentionManager.FillMethods(ProcAddr: Pointer; AStpState: byte);
 var
-vStpMethodClassGetter : TStpMethodClassGetter;
+  vStpMethodClassGetter : TStpMethodClassGetter;
 begin
   @vStpMethodClassGetter := ProcAddr;
   MeasureMethods[AStpState] := vStpMethodClassGetter;

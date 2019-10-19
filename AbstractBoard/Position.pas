@@ -1,7 +1,12 @@
 unit Position;
 
 interface
-uses System.Classes, ExtentionsList, AbstractExtention, PositionInterface;
+uses
+  System.Classes,
+  ExtentionsList,
+  AbstractExtention,
+  PositionInterface;
+
 type
 
   TPosition = class(TComponent, IPosition)
@@ -25,7 +30,9 @@ type
 
 implementation
 
-uses System.SysUtils, PositionListInterface;
+uses
+  System.SysUtils,
+  PositionListInterface;
 
 constructor TPosition.Create(AOwner : TComponent; ABoardPos : byte);
 begin
@@ -53,7 +60,7 @@ end;
 
 procedure TPosition.SetActive(const Value: boolean);
 var
-vPosList : IPositionsListExt;
+  vPosList : IPositionsListExt;
 begin
   if (fActive <> Value) then
   begin

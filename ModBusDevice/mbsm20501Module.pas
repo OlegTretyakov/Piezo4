@@ -2,13 +2,18 @@ unit mbsm20501Module;
 
 interface
   uses
-  System.Classes, System.Threading, DeviceModule, ModBusDeviceInterface,
-  mbsm20501Interface, dmChannelsInterface, AbstractTag, DiscreteBlock, AnalogBLock,
-  System.SyncObjs;
+    System.Classes,
+    System.Threading,
+    System.SyncObjs,
+    DeviceModule,
+    ModBusDeviceInterface,
+    mbsm20501Interface,
+    dmChannelsInterface,
+    AbstractTag,
+    DiscreteBlock,
+    AnalogBLock;
 
   type
-
-
 
   Tmbsm20501Module = class(TDeviceModule,
                       Imbsm20501,
@@ -33,25 +38,25 @@ interface
     {IdmChannels}
     function GetChannelsCount : word; stdcall;
     {Imbsm20501}
-    function GetAutoRead : Boolean; stdcall;
-    procedure SetAutoRead(const Value : Boolean); stdcall;
-    procedure SetCLKMode(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetCLKMode(AIndex:Byte) : Boolean;stdcall;
-    procedure SetDAMode(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetDAMode(AIndex:Byte) : Boolean;stdcall;
-    procedure SetMOUTMode(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetMOUTMode(AIndex:Byte) : Boolean;stdcall;
-    procedure SetCLK(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetCLK(AIndex:Byte) : Boolean;stdcall;
-    procedure SetDA(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetDA(AIndex:Byte) : Boolean;stdcall;
-    procedure SetMOUT(AIndex:Byte; const Value : Boolean);stdcall;
-    function GetMOUT(AIndex:Byte) : Boolean;stdcall;
-    procedure SetMOUTSwitch(AIndex:Byte; const Value : Byte);stdcall;
-    function GetMOUTSwitch(AIndex:Byte) : Byte;stdcall;
-    function GetCLKDR(AIndex :Byte) : Boolean; stdcall;
-    function GetDADR(AIndex :Byte) : Boolean; stdcall;
-    function GetMOUTDR(AIndex :Byte) : Boolean; stdcall;
+    function GetAutoRead : boolean; stdcall;
+    procedure SetAutoRead(const Value : boolean); stdcall;
+    procedure SetCLKMode(AIndex : Byte; const Value : boolean); stdcall;
+    function GetCLKMode(AIndex : Byte) : boolean; stdcall;
+    procedure SetDAMode(AIndex : Byte; const Value : Boolean); stdcall;
+    function GetDAMode(AIndex : Byte): boolean; stdcall;
+    procedure SetMOUTMode(AIndex : Byte; const Value : boolean);stdcall;
+    function GetMOUTMode(AIndex : Byte): boolean;stdcall;
+    procedure SetCLK(AIndex : Byte; const Value : boolean);stdcall;
+    function GetCLK(AIndex : Byte) : boolean;stdcall;
+    procedure SetDA(AIndex : Byte; const Value : boolean);stdcall;
+    function GetDA(AIndex : Byte) : boolean;stdcall;
+    procedure SetMOUT(AIndex : Byte; const Value : boolean);stdcall;
+    function GetMOUT(AIndex : Byte) : boolean;stdcall;
+    procedure SetMOUTSwitch(AIndex : Byte; const Value : Byte);stdcall;
+    function GetMOUTSwitch(AIndex: Byte): Byte;stdcall;
+    function GetCLKDR(AIndex : Byte): boolean; stdcall;
+    function GetDADR(AIndex : Byte): boolean; stdcall;
+    function GetMOUTDR(AIndex :Byte): boolean; stdcall;
    {IBlockNotifyInterface}
     procedure NotifyReadOk(Sender:TObject); stdcall;
     procedure NotifyReadFault(Sender:TObject);stdcall;
@@ -69,7 +74,7 @@ interface
 
 implementation
 uses
-System.SysUtils;
+  System.SysUtils;
 
 { Tmbsm20501Module }
 
@@ -163,7 +168,7 @@ begin
   AConditions.Add('sm');
 end;
 
-function Tmbsm20501Module.GetAutoRead: Boolean;
+function Tmbsm20501Module.GetAutoRead: boolean;
 begin
   Result := fCLKModeCoilsBlock.AutoRead
         or fDAModeCoilsBlock.AutoRead
@@ -174,7 +179,7 @@ begin
         or fMOUTSwitchesBlock.AutoRead;
 end;
 
-procedure Tmbsm20501Module.SetAutoRead(const Value: Boolean);
+procedure Tmbsm20501Module.SetAutoRead(const Value: boolean);
 begin
   fCLKModeCoilsBlock.AutoRead := Value;
   fDAModeCoilsBlock.AutoRead := Value;
@@ -193,63 +198,63 @@ begin
   result := fPositionsCount;
 end;
 
-function Tmbsm20501Module.GetCLK(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetCLK(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fCLKCoilsBlock.Size then
     result := fCLKCoilsBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetCLKDR(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetCLKDR(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fCLKDiscretesBlock.Size then
     result := fCLKDiscretesBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetCLKMode(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetCLKMode(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fCLKModeCoilsBlock.Size then
     result := fCLKModeCoilsBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetDA(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetDA(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fDACoilsBlock.Size then
     result := fDACoilsBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetDADR(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetDADR(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fDADiscretesBlock.Size then
     result := fDADiscretesBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetDAMode(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetDAMode(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fDAModeCoilsBlock.Size then
     result := fDAModeCoilsBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetMOUT(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetMOUT(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fMOUTCoilsBlock.Size then
     result := fMOUTCoilsBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetMOUTDR(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetMOUTDR(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fMOUTDiscretesBlock.Size then
     result := fMOUTDiscretesBlock.Values[AIndex];
 end;
 
-function Tmbsm20501Module.GetMOUTMode(AIndex: Byte): Boolean;
+function Tmbsm20501Module.GetMOUTMode(AIndex: Byte): boolean;
 begin
   result := false;
   if AIndex < fMOUTModeCoilsBlock.Size then
@@ -266,8 +271,8 @@ end;
 procedure Tmbsm20501Module.NotifyReadFault(Sender: TObject);
 
 var
-vTask : TsmReadTask;
-vMessage : pReadMessage;
+  vTask : TsmReadTask;
+  vMessage : pReadMessage;
 begin
   if (Sender = fMOUTSwitchesBlock) then
      vTask := smrdMOUTSwitch
@@ -303,8 +308,8 @@ end;
 
 procedure Tmbsm20501Module.NotifyReadOk(Sender: TObject);
 var
-vTask : TsmReadTask;
-vMessage : pReadMessage;
+  vTask : TsmReadTask;
+  vMessage : pReadMessage;
 begin
   if (Sender = fMOUTSwitchesBlock) then
      vTask := smrdMOUTSwitch
@@ -344,8 +349,8 @@ end;
 
 procedure Tmbsm20501Module.NotifyWriteFault(Sender: TObject);
 var
-vTask : TsmWriteTask;
-vMessage : pWriteMessage;
+  vTask : TsmWriteTask;
+  vMessage : pWriteMessage;
 begin
   if (Sender = fMOUTSwitchesBlock) then
      vTask := smioMOUTSwitch
@@ -374,8 +379,8 @@ end;
 
 procedure Tmbsm20501Module.NotifyWriteOk(Sender: TObject);
 var
-vTask : TsmWriteTask;
-vMessage : pWriteMessage;
+  vTask : TsmWriteTask;
+  vMessage : pWriteMessage;
 begin
   if (Sender = fMOUTSwitchesBlock) then
      vTask := smioMOUTSwitch
@@ -406,7 +411,7 @@ procedure Tmbsm20501Module.RemoveTag(Sender: TObject);
 begin
 end;
 
-procedure Tmbsm20501Module.SetCLK(AIndex: Byte; const Value: Boolean);
+procedure Tmbsm20501Module.SetCLK(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fCLKCoilsBlock) and (AIndex < fCLKCoilsBlock.Size) then
   begin
@@ -422,7 +427,7 @@ begin
   end;
 end;
 
-procedure Tmbsm20501Module.SetCLKMode(AIndex: Byte; const Value: Boolean);
+procedure Tmbsm20501Module.SetCLKMode(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fCLKModeCoilsBlock) and (AIndex < fCLKModeCoilsBlock.Size) then
   begin
@@ -438,7 +443,7 @@ begin
   end;
 end;
 
-procedure Tmbsm20501Module.SetDA(AIndex: Byte; const Value: Boolean);
+procedure Tmbsm20501Module.SetDA(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fDACoilsBlock) and (AIndex < fDACoilsBlock.Size) then
   begin
@@ -454,7 +459,7 @@ begin
   end;
 end;
 
-procedure Tmbsm20501Module.SetDAMode(AIndex: Byte; const Value: Boolean);
+procedure Tmbsm20501Module.SetDAMode(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fDAModeCoilsBlock) and (AIndex < fDAModeCoilsBlock.Size) then
   begin
@@ -470,7 +475,7 @@ begin
   end;
 end;
 
-procedure Tmbsm20501Module.SetMOUT(AIndex: Byte; const Value: Boolean);
+procedure Tmbsm20501Module.SetMOUT(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fMOUTCoilsBlock) and (AIndex < fMOUTCoilsBlock.Size) then
   begin
@@ -486,8 +491,7 @@ begin
   end;
 end;
 
-procedure Tmbsm20501Module.SetMOUTMode(AIndex: Byte;
-  const Value: Boolean);
+procedure Tmbsm20501Module.SetMOUTMode(AIndex: Byte; const Value: boolean);
 begin
   if Assigned(fMOUTModeCoilsBlock) and (AIndex < fMOUTModeCoilsBlock.Size) then
   begin
@@ -521,7 +525,7 @@ end;
 
 procedure Tmbsm20501Module.WriteAsyn(Sender : TObject);
 var
-vTask : TsmWriteTask;
+  vTask : TsmWriteTask;
 begin
   if (fWriteTasks = []) then
     Exit;

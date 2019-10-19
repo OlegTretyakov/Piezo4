@@ -1,7 +1,8 @@
 unit mbvg20402Interface;
 
 interface
-  uses  dmBoardVoltmeterInterface;
+  uses
+    dmBoardVoltmeterInterface;
   type
 
    Imbvg20402Module = interface(IInterface)
