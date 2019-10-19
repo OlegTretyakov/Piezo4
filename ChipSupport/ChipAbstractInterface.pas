@@ -15,14 +15,14 @@ interface
     function BitMaxIndex : byte; stdcall;
     function ChipGUID : TGUID; stdcall;
     function ChipName: String; stdcall;
-    function BitMinValue(AIndex : byte):smallint; stdcall;
-    function BitMeanValue(AIndex : byte):smallint; stdcall;
-    function BitMaxValue(AIndex : byte):smallint; stdcall;
-    function BitDefValue(AIndex : byte):smallint; stdcall;
-    procedure ReadControlledBitsIndex(const ASection : string; ADefault : Boolean; out oBitsIndex : TChipBytes); stdcall;
-    function ReadIntConstant(const ASection, AIdent : string; var oConst : Integer):Boolean;stdcall;
-    function ReadStrConstant(const ASection, AIdent : string; var oConst : String):Boolean;stdcall;
-    property BitValue[AIndex : byte]:smallint read GetBitValue write SetBitValue;
+    function BitMinValue(AIndex : byte): smallint; stdcall;
+    function BitMeanValue(AIndex : byte): smallint; stdcall;
+    function BitMaxValue(AIndex : byte): smallint; stdcall;
+    function BitDefValue(AIndex : byte): smallint; stdcall;
+    procedure ReadControlledBitsIndex(const ASection : string; ADefault : boolean; out oBitsIndex : TChipBytes); stdcall;
+    function ReadIntConstant(const ASection, AIdent : string; var oConst : Integer): boolean;stdcall;
+    function ReadStrConstant(const ASection, AIdent : string; var oConst : String): boolean;stdcall;
+    property BitValue[AIndex : byte]: smallint read GetBitValue write SetBitValue;
   end;
 implementation
 

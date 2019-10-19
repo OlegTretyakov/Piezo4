@@ -250,20 +250,24 @@ begin
 end;
 
 function TChipPluginManager.GetClass(const Index: Byte): TChipClass;
-var vInfo : TChipClassPluginInfo;
+var
+  vInfo : TChipClassPluginInfo;
 begin
-  result := nil;
   if (Index < Count) then
   begin
     vInfo := TChipClassPluginInfo(inherited Get(Index));
     result := vInfo.ChipClass;
   end else
+  begin
+    result := nil;
     raise Exception.Create(Format('No chip module found whith index %d',[Index]));
+  end;
 end;
 
 function TChipPluginManager.GetModuleName(const Index: Integer): String;
-var vInfo : TChipClassPluginInfo;
-Buffer: array[0..MAX_PATH] of Char;
+var
+  vInfo : TChipClassPluginInfo;
+  Buffer: array[0..MAX_PATH] of Char;
 begin
   if (Index > -1) and (Index < Count) then
   begin
@@ -367,7 +371,6 @@ begin
               if vPluginModule > 0 then
               begin
                 FreeLibrary(vPluginModule);
-                vPluginModule := 0;
               end;
             end;
           end;
